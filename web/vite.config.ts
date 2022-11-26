@@ -23,7 +23,6 @@ export default defineConfig(() => {
           changeOrigin: true,
           rewrite: (path) => {
             const reg = new RegExp("^\\" + proxySu + "/");
-            console.log(reg);
             return path.replace(reg, "");
           },
         },
