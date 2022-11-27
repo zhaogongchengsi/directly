@@ -1,5 +1,15 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import "uno.css";
+import "@unocss/reset/tailwind.css";
+import "./style.css";
+
+import { createAppRouters } from './routers'
+import { createAppStore } from './store'
+
+
+const app = createApp(App)
+createAppRouters(app)
+createAppStore(app);
+app.mount('#app')

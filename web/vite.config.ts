@@ -2,15 +2,17 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 import dotenv from "dotenv";
+import Unocss from "unocss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   const { parsed } = dotenv.config();
 
-  const proxySu = parsed["VITE_PROXY"];
+  const proxyprefix = parsed["VITE_PROXY"];
+  const proxytraget = parsed["VITE_TARGET"];
 
   return {
-    plugins: [vue()],
+    plugins: [vue(), Unocss({})],
     resolve: {
       alias: {
         "@": path.resolve("./src"),
@@ -18,11 +20,11 @@ export default defineConfig(() => {
     },
     server: {
       proxy: {
-        [proxySu]: {
-          target: "http://localhost:3000",
+        [proxyprefix]: {
+          target: proxytraget,
           changeOrigin: true,
-          rewrite: (path) => {
-            const reg = new RegExp("^\\" + proxySu + "/");
+          rewrite: (path: string) => {
+            const reg = new RegExp("^\\" + proxyprefix + "/");
             return path.replace(reg, "");
           },
         },
