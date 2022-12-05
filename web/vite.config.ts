@@ -7,10 +7,13 @@ import { presetAttributify, presetUno } from "unocss";
 import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
+import presetIcons from "@unocss/preset-icons";
+
 // import { createStyleImportPlugin } from "vite-plugin-style-import";
 
 export default defineConfig(() => {
   const { parsed } = dotenv.config();
+  const dark = "class";
 
   const proxyprefix = parsed["VITE_PROXY"];
   const proxytraget = parsed["VITE_TARGET"];
@@ -19,7 +22,11 @@ export default defineConfig(() => {
     plugins: [
       vue(),
       unocss({
-        presets: [presetAttributify({}), presetUno({ dark: "class" })],
+        presets: [
+          presetIcons({ dark }),
+          presetAttributify({ dark }),
+          presetUno({ dark }),
+        ],
       }),
       autoImport({
         resolvers: [ArcoResolver()],

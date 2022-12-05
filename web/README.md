@@ -1,7 +1,6 @@
-
 # 一个前端模版
-此前端模版对接的时 server-gin 和 server-nest 它们将使用同一套规范接口
 
+此前端模版对接的时 server-gin 和 server-nest 它们将使用同一套规范接口
 
 ### 使用技术
 
@@ -16,3 +15,5 @@
 > [pinia](https://pinia.vuejs.org/)
 >
 > [router](https://router.vuejs.org/zh/)
+>
+> [图标](https://tabler-icons.io/)

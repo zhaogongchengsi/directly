@@ -5,21 +5,17 @@
   >
     <div class="h-full flex justify-between items-center border-box pl-5 pr-10">
       <div class="cursor-pointer" @click="setsider">
-        <icon-menu-unfold
-          v-if="setting.themeSetting.collapsed"
-          :size="menuSize"
+        <Icon
+          :name="
+            setting.themeSetting.collapsed ? 'arrows-right' : 'arrows-left'
+          "
         />
-        <icon-menu-fold :size="menuSize" v-else />
       </div>
       <div class="right-header">
         <a-space size="large">
           <div class="cursor-pointer" @click="setting.setMode()">
-            <icon-moon-fill v-if="setting.themeMode === 'light'" size="25" />
-            <icon-sun-fill
-              class="text-white"
-              size="25"
-              v-if="setting.themeMode === 'dark'"
-            />
+            <Icon v-if="setting.themeMode === 'light'" name="moon-stars"></Icon>
+            <Icon v-if="setting.themeMode === 'dark'" name="sun-high"></Icon>
           </div>
           <a-dropdown trigger="hover">
             <div class="w-20 flex justify-center">
