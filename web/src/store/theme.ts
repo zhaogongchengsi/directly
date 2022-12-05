@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
-import { useColorMode } from "@vueuse/core";
+import { useColorMode, useStorageAsync } from "@vueuse/core";
+
 export const THEME_STORAGE_KEY = "anya-theme";
+export const SIDER_STORAGE_SETTING_KEY = "anya-sider-setting";
 
 export type ThemeMode = "dark" | "light";
 
@@ -13,7 +15,12 @@ export const useThemeStore = defineStore("theme", {
       storageKey: THEME_STORAGE_KEY,
     });
 
-    return { mode };
+    const siderSetting = useStorageAsync(SIDER_STORAGE_SETTING_KEY, {
+      width: 220,
+      collapsed: false,
+    });
+
+    return { mode, siderSetting };
   },
 
   actions: {

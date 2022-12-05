@@ -3,13 +3,13 @@
     <a-layout-sider
       :theme="theme.themeMode"
       breakpoint="lg"
-      :width="220"
+      :width="theme.siderSetting.width"
+      :collapsed="theme.siderSetting.collapsed"
       collapsible
-      :collapsed="collapsed"
       @collapse="onCollapse"
       class="h-screen"
     >
-      <div class="w-full h-15 bg-gray-300">logo</div>
+      <div class="w-full h-15">logo</div>
       <a-menu
         :defaultOpenKeys="['1']"
         :defaultSelectedKeys="['0_2']"
@@ -59,20 +59,12 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 import { IconCalendar } from "@arco-design/web-vue/es/icon";
 import { Message } from "@arco-design/web-vue";
-import { ref } from "vue";
 import { useThemeStore } from "@/store";
 
 const theme = useThemeStore();
 
-
-const collapsed = ref(false);
-const onCollapse = (val: boolean, type: string) => {
-  const content = type === "responsive" ? "触发响应式收缩" : "点击触发收缩";
-  Message.info({
-    content,
-    duration: 2000,
-  });
-  collapsed.value = val;
+const onCollapse = (val: boolean) => {
+  theme.siderSetting.collapsed = val;
 };
 
 const onClickMenuItem = (key: any) => {
