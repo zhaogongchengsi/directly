@@ -12,7 +12,7 @@ const click = async () => {
 
 <template>
   <div
-    class="flex w-full h-screen items-center justify-center flex-col "
+    class="flex w-full h-full items-center justify-center flex-col "
   >
     <h1 class="text-30 text-gray-800 font-semibold">{{ msg }}</h1>
 
