@@ -1,45 +1,35 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Get } from "@/utils/http";
 
 defineProps<{ msg: string }>();
 
 const count = ref(0);
 
 const click = async () => {
-  const res = await Get("/");
-  console.log(res);
   count.value = ++count.value;
 };
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <div
+    class="flex w-full h-screen items-center justify-center flex-col "
+  >
+    <h1 class="text-30 text-gray-800 font-semibold">{{ msg }}</h1>
 
-  <div class="card">
-    <button type="button" @click="click">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+    <img src="vite.svg" class="w-50 my-10" alt="" />
+
+    <div class="flex flex-col justify-center items-center my-10">
+      <button
+        type="button"
+        class="px-5 py-3 text-5 border border-rd-2 border-green-600 text-green-600 hover:border-indigo-800 hover:text-indigo-800"
+        @click="click"
+      >
+        count is {{ count }}
+      </button>
+      <p class="mt-10 text-blue-700">
+        Edit
+        <code>components/HelloWorld.vue</code> to test HMR
+      </p>
+    </div>
   </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
-
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>

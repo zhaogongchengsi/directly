@@ -2,9 +2,13 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 import dotenv from "dotenv";
-import Unocss from "unocss/vite";
+import unocss from "unocss/vite";
+import { presetAttributify, presetUno } from "unocss";
+import autoImport from "unplugin-auto-import/vite";
+import components from "unplugin-vue-components/vite";
+import { ArcoResolver } from "unplugin-vue-components/resolvers";
+import { createStyleImportPlugin } from "vite-plugin-style-import";
 
-// https://vitejs.dev/config/
 export default defineConfig(() => {
   const { parsed } = dotenv.config();
 
@@ -12,7 +16,33 @@ export default defineConfig(() => {
   const proxytraget = parsed["VITE_TARGET"];
 
   return {
-    plugins: [vue(), Unocss({})],
+    plugins: [
+      vue(),
+      unocss({
+        presets: [presetAttributify({}), presetUno({})],
+      }),
+      autoImport({
+        resolvers: [ArcoResolver()],
+      }),
+      components({
+        resolvers: [
+          ArcoResolver({
+            sideEffect: true,
+          }),
+        ],
+      }),
+      createStyleImportPlugin({
+        libs: [
+          {
+            libraryName: "@arco-design/web-vue",
+            esModule: true,
+            resolveStyle: (name) => {
+              return `@arco-design/web-vue/es/${name}/style/css.js`;
+            },
+          },
+        ],
+      }),
+    ],
     resolve: {
       alias: {
         "@": path.resolve("./src"),
