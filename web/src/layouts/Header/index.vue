@@ -13,10 +13,7 @@
       </div>
       <div class="right-header">
         <a-space size="large">
-          <div class="cursor-pointer" @click="setting.setMode()">
-            <Icon v-if="setting.themeMode === 'light'" name="moon-stars"></Icon>
-            <Icon v-if="setting.themeMode === 'dark'" name="sun-high"></Icon>
-          </div>
+          <Mode />
           <a-dropdown trigger="hover">
             <div class="w-20 flex justify-center">
               <a-avatar> <img src="/vite.svg" alt="avatar" /> </a-avatar>
@@ -33,6 +30,7 @@
 </template>
 <script setup lang="ts">
 import { useThemeStore } from "@/store";
+import Mode from "@/layouts/Mode.vue";
 const setting = useThemeStore();
 const setsider = () => {
   setting.themeSetting.collapsed = !setting.themeSetting.collapsed;
