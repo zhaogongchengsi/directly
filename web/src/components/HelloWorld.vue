@@ -14,7 +14,9 @@ const click = async () => {
   <div
     class="flex w-full h-full items-center justify-center flex-col dark:bg-gray-900"
   >
-    <h1 class="text-30 text-gray-800 font-semibold">{{ msg }}</h1>
+    <h1 class="text-30 text-gray-800 dark:text-white font-semibold">
+      {{ msg }}
+    </h1>
 
     <img src="vite.svg" class="w-50 my-10" alt="" />
 

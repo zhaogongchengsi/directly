@@ -32,20 +32,11 @@
   </a-layout-header>
 </template>
 <script setup lang="ts">
-import {
-  IconMenuFold,
-  IconMenuUnfold,
-  IconMoonFill,
-  IconSunFill,
-} from "@arco-design/web-vue/es/icon";
 import { useThemeStore } from "@/store";
 const setting = useThemeStore();
-
 const setsider = () => {
   setting.themeSetting.collapsed = !setting.themeSetting.collapsed;
 };
-
-const menuSize = 30;
 </script>
 <style lang="scss">
 .header-light-bg {
