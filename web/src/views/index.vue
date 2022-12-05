@@ -1,7 +1,7 @@
 <template>
   <a-layout>
     <a-layout-sider
-      theme="dark"
+      :theme="theme.themeMode"
       breakpoint="lg"
       :width="220"
       collapsible
@@ -15,10 +15,6 @@
         :defaultSelectedKeys="['0_2']"
         @menuItemClick="onClickMenuItem"
       >
-        <a-menu-item key="0_1" disabled>
-          <IconHome />
-          Menu 1
-        </a-menu-item>
         <a-menu-item key="0_2">
           <IconCalendar />
           Menu 2
@@ -50,7 +46,9 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header> header </a-layout-header>
+      <a-layout-header>
+        <button @click="theme.setMode()">切换</button>
+      </a-layout-header>
       <a-layout style="padding: 0 24px">
         <a-layout-content> <HelloWorld msg="Hello Anya" /></a-layout-content>
       </a-layout>
@@ -59,9 +57,13 @@
 </template>
 <script setup lang="ts">
 import HelloWorld from "@/components/HelloWorld.vue";
-import { IconHome, IconCalendar } from "@arco-design/web-vue/es/icon";
+import { IconCalendar } from "@arco-design/web-vue/es/icon";
 import { Message } from "@arco-design/web-vue";
 import { ref } from "vue";
+import { useThemeStore } from "@/store";
+
+const theme = useThemeStore();
+
 
 const collapsed = ref(false);
 const onCollapse = (val: boolean, type: string) => {
