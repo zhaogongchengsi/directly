@@ -1,15 +1,19 @@
 <template>
-  <a-layout>
+  <a-layout class="h-screen">
     <a-layout-sider
       :theme="theme.themeMode"
-      breakpoint="lg"
-      :width="theme.siderSetting.width"
-      :collapsed="theme.siderSetting.collapsed"
+      :width="theme.themeSetting.asiderWidth"
+      :collapsed="theme.themeSetting.collapsed"
       collapsible
+      breakpoint="lg"
       @collapse="onCollapse"
-      class="h-screen"
     >
-      <div class="w-full h-15">logo</div>
+      <div
+        class="w-full h-15"
+        :style="{ height: theme.themeSetting.headerHeight + 'px' }"
+      >
+        logo
+      </div>
       <a-menu
         :defaultOpenKeys="['1']"
         :defaultSelectedKeys="['0_2']"
@@ -35,21 +39,13 @@
             <a-menu-item key="3_3">Menu 3</a-menu-item>
           </a-sub-menu>
         </a-sub-menu>
-        <a-sub-menu key="4">
-          <template #title>
-            <span><IconCalendar />Navigation 4</span>
-          </template>
-          <a-menu-item key="4_1">Menu 1</a-menu-item>
-          <a-menu-item key="4_2">Menu 2</a-menu-item>
-          <a-menu-item key="4_3">Menu 3</a-menu-item>
-        </a-sub-menu>
       </a-menu>
     </a-layout-sider>
     <a-layout>
       <a-layout-header>
         <button @click="theme.setMode()">切换</button>
       </a-layout-header>
-      <a-layout style="padding: 0 24px">
+      <a-layout>
         <a-layout-content> <HelloWorld msg="Hello Anya" /></a-layout-content>
       </a-layout>
     </a-layout>
@@ -64,7 +60,7 @@ import { useThemeStore } from "@/store";
 const theme = useThemeStore();
 
 const onCollapse = (val: boolean) => {
-  theme.siderSetting.collapsed = val;
+  theme.themeSetting.collapsed = val;
 };
 
 const onClickMenuItem = (key: any) => {

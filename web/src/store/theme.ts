@@ -10,17 +10,28 @@ export const useThemeStore = defineStore("theme", {
   state: () => {
     const mode = useColorMode({
       selector: "body",
-      attribute: "arco-theme",
+      attribute: "class",
       storage: localStorage,
       storageKey: THEME_STORAGE_KEY,
+      onChanged(mode) {
+        if (mode === "dark") {
+          document.body.setAttribute("arco-theme", "dark");
+          document.body.classList.remove("light");
+        } else {
+          document.body.classList.remove("dark");
+          document.body.removeAttribute("arco-theme");
+        }
+        document.body.classList.add(mode);
+      },
     });
 
-    const siderSetting = useStorageAsync(SIDER_STORAGE_SETTING_KEY, {
-      width: 220,
+    const themeSetting = useStorageAsync(SIDER_STORAGE_SETTING_KEY, {
+      asiderWidth: 220,
       collapsed: false,
+      headerHeight: 60,
     });
 
-    return { mode, siderSetting };
+    return { mode, themeSetting };
   },
 
   actions: {

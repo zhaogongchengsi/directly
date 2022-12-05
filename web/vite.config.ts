@@ -19,7 +19,7 @@ export default defineConfig(() => {
     plugins: [
       vue(),
       unocss({
-        presets: [presetAttributify({}), presetUno({})],
+        presets: [presetAttributify({}), presetUno({ dark: "class" })],
       }),
       autoImport({
         resolvers: [ArcoResolver()],
