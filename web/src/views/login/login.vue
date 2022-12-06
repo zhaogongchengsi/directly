@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-screen relative dark:bg-#232324 flex">
+  <div class="w-full h-screen relative dark:bg-#232324 flex login-page">
     <div class="flex-1">123</div>
-    <div class="flex-1">123</div>
+    <div class="flex-1 right-page">123</div>
     <div class="fixed right-0 top-0 login-mode-card">
       <Mode></Mode>
     </div>
@@ -11,6 +11,12 @@
 import Mode from "@/layouts/mode.vue";
 </script>
 <style lang="scss" scoped>
+.login-page {
+  .right-page {
+    // background: url(/bg1.svg) no-repeat right top / 100% 100%;
+  }
+}
+
 .login-mode-card {
   border-radius: 0% 100% 0% 100% / 1% 0% 100% 99%;
   width: 60px;

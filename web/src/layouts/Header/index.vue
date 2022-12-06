@@ -5,10 +5,11 @@
   >
     <div class="h-full flex justify-between items-center border-box pl-5 pr-10">
       <div class="cursor-pointer" @click="setsider">
-        <Icon
-          :name="
-            setting.themeSetting.collapsed ? 'arrows-right' : 'arrows-left'
-          "
+        <div
+          :class="[
+            setting.themeSetting.collapsed ? 'i-tabler-arrows-right' : 'i-tabler-arrows-left',
+            'icon',
+          ]"
         />
       </div>
       <div class="right-header">

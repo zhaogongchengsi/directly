@@ -1,7 +1,7 @@
 <template>
   <div class="cursor-pointer" @click="setting.setMode()">
-    <Icon v-if="setting.themeMode === 'light'" name="moon-stars"></Icon>
-    <Icon v-if="setting.themeMode === 'dark'" name="sun-high"></Icon>
+    <div v-if="setting.themeMode === 'light'" class="i-tabler-moon-stars icon"></div>
+    <div v-if="setting.themeMode === 'dark'" class="i-tabler-sun-high icon"></div>
   </div>
 </template>
 <script setup lang="ts">

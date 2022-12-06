@@ -3,11 +3,10 @@ import vue from "@vitejs/plugin-vue";
 import path from "path";
 import dotenv from "dotenv";
 import unocss from "unocss/vite";
-import { presetAttributify, presetUno } from "unocss";
+import { presetAttributify, presetUno, presetIcons } from "unocss";
 import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
-import presetIcons from "@unocss/preset-icons";
 
 // import { createStyleImportPlugin } from "vite-plugin-style-import";
 
@@ -21,13 +20,6 @@ export default defineConfig(() => {
   return {
     plugins: [
       vue(),
-      unocss({
-        presets: [
-          presetIcons({ dark }),
-          presetAttributify({ dark }),
-          presetUno({ dark }),
-        ],
-      }),
       autoImport({
         resolvers: [ArcoResolver()],
       }),
@@ -36,6 +28,13 @@ export default defineConfig(() => {
           ArcoResolver({
             sideEffect: true,
           }),
+        ],
+      }),
+      unocss({
+        presets: [
+          presetAttributify({ dark }),
+          presetUno({ dark }),
+          presetIcons({}),
         ],
       }),
     ],
