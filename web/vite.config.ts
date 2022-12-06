@@ -17,6 +17,8 @@ export default defineConfig(() => {
   const proxyprefix = parsed["VITE_PROXY"];
   const proxytraget = parsed["VITE_TARGET"];
 
+  console.log(proxyprefix, proxytraget);
+
   return {
     plugins: [
       vue(),
@@ -45,8 +47,8 @@ export default defineConfig(() => {
     },
     server: {
       proxy: {
-        [proxyprefix]: {
-          target: proxytraget,
+        [`^${proxyprefix}/.*`]: {
+          target: proxytraget + proxyprefix,
           changeOrigin: true,
           rewrite: (path: string) => {
             const reg = new RegExp("^\\" + proxyprefix + "/");

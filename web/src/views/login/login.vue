@@ -56,8 +56,18 @@
   </div>
 </template>
 <script setup lang="ts">
+import { getCaptcha } from "@/api/user";
 import Mode from "@/layouts/mode.vue";
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
+
+const captcha = async () => {
+  const res = await getCaptcha();
+  console.log(res);
+};
+
+onMounted(() => {
+  captcha();
+});
 
 const form = reactive({
   name: "",

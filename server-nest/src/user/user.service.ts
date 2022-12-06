@@ -19,7 +19,7 @@ export class UserService {
     });
 
     return {
-      id: picture.text,
+      text: picture.text,
       img: picture.data,
     };
   }
