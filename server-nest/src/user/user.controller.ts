@@ -1,17 +1,25 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from 'src/app.service';
+import { Controller, Get, Post, Req } from '@nestjs/common';
+import { ResponseFormat } from 'src/common/response';
 import { UserService } from './user.service';
+import captcha from 'svg-captcha';
 
-@Controller('/user')
+@Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly appService: AppService,
+    private readonly response: ResponseFormat,
   ) {}
 
-  @Get()
-  login() {
-    // console.log(this.appService.getHello());
-    // return this.userService.login();
+  @Post('login')
+  async login() {
+    return this.response.success(await this.userService.login());
   }
+
+  @Post('register')
+  register() {
+    return this.response.error(200, '注册失败', new Error('注册失败'));
+  }
+
+  @Get('/pictureVerCode')
+  pictureVerificationCode(@Req() request: Request) {}
 }
