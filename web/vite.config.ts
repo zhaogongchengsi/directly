@@ -8,7 +8,7 @@ import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
 
-// import { createStyleImportPlugin } from "vite-plugin-style-import";
+import { viteMockServe } from "vite-plugin-mock";
 
 export default defineConfig(() => {
   const { parsed } = dotenv.config();
@@ -16,8 +16,7 @@ export default defineConfig(() => {
 
   const proxyprefix = parsed["VITE_PROXY"];
   const proxytraget = parsed["VITE_TARGET"];
-
-  console.log(proxyprefix, proxytraget);
+  const usemock = parsed["VITE_USE_MOCK"];
 
   return {
     plugins: [
@@ -38,6 +37,12 @@ export default defineConfig(() => {
           presetUno({ dark }),
           presetIcons({}),
         ],
+      }),
+      viteMockServe({
+        mockPath: "mock", //mock文件路径，在根路径下创建一个mock文件
+        localEnabled: usemock ? true : false, //mock开关
+        prodEnabled: false, //生产环境下为false，这样就不会被打包到生产包中
+        ignore: /^\_/, //忽略开始_路径
       }),
     ],
     resolve: {
