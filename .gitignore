@@ -168,3 +168,4 @@ docs/_book
 test/
 
 server-nest/.env
+server-nest/prisma/migrations/*
