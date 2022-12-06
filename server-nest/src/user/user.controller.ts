@@ -21,7 +21,6 @@ export class UserController {
 
   @Get('/captcha')
   pictureVerificationCode() {
-    console.log('picture');
     //! !只是模板原因 不在后端验证 验证码 所以不存储验证码信息 生产环境下 可以使用 session 或者 redis 存储
     const { img, text } = this.userService.createCaptcha();
     return this.response.success({ id: text, image: img, type: 'svg' });
