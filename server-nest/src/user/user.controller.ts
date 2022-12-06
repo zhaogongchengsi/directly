@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req } from '@nestjs/common';
+import { Controller, Get, Post, Req, Body } from '@nestjs/common';
 import { ResponseFormat } from 'src/common/response';
 import { UserService } from './user.service';
 
@@ -14,19 +14,20 @@ export class UserController {
   ) {}
 
   @Post('login')
-  async login() {
+  async login(@Body() parms: { id: string }, @Req() request: Request) {
+    const res = request.session[CAPTCHA_S_ID];
     return this.response.success(await this.userService.login());
   }
 
   @Post('register')
-  register() {
-    return this.response.error(200, '注册失败', new Error('注册失败'));
+  register(@Req() request: Request) {
+    return this.response.success(request.session[CAPTCHA_S_ID]);
   }
 
   @Get('/captcha')
   pictureVerificationCode(@Req() request: Request) {
     const { id, img } = this.userService.createCaptcha();
-    request.session[CAPTCHA_S_ID] = id;
-    return this.response.success({ id, image: img });
+    request.session[CAPTCHA_S_ID] = { [id]: id };
+    return this.response.success({ id, image: img, type: 'svg' });
   }
 }
