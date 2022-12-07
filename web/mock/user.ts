@@ -44,6 +44,8 @@ export default [
             avatar,
             account: body.account,
             nickName: "admin",
+            language: "zn",
+            rule: "admin",
           },
           token,
         },

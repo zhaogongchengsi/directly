@@ -1,7 +1,7 @@
 <template>
   <a-layout-header
     :style="{ height: setting.themeSetting.headerHeight + 'px' }"
-    :class="['shadow', `header-${setting.themeMode}-bg`]"
+    :class="['shadow', `header-${setting.themeMode}-bg`, 'min-h-60px']"
   >
     <div class="h-full flex justify-between items-center border-box pl-5 pr-10">
       <div class="cursor-pointer" @click="setsider">
@@ -20,11 +20,13 @@
           <Mode />
           <a-dropdown trigger="hover">
             <div class="w-20 flex justify-center">
-              <a-avatar> <img src="/vite.svg" alt="avatar" /> </a-avatar>
+              <a-avatar>
+                <img :src="userInfo?.avatar" alt="avatar" />
+              </a-avatar>
             </div>
             <template #content>
               <a-doption>Option 1</a-doption>
-              <a-doption>注销登录</a-doption>
+              <a-doption @click="outLogin">注销登录</a-doption>
             </template>
           </a-dropdown>
         </a-space>
@@ -33,9 +35,26 @@
   </a-layout-header>
 </template>
 <script setup lang="ts">
-import { useThemeStore } from "@/store";
+import { useThemeStore, useUserStore } from "@/store";
+import { useRouter } from "vue-router";
 import Mode from "@/layouts/Mode.vue";
+import { computed } from "vue";
+import { UserInfo } from "@/types/user";
 const setting = useThemeStore();
+const user = useUserStore();
+const router = useRouter();
+
+const userInfo = computed(() => {
+  if (user.logined) {
+    return user.user as UserInfo;
+  }
+});
+
+const outLogin = () => {
+  user.LoginOut();
+  router.push("/login");
+};
+
 const setsider = () => {
   setting.themeSetting.collapsed = !setting.themeSetting.collapsed;
 };

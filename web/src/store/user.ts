@@ -30,12 +30,22 @@ export const useUserStore = defineStore("user", {
         window.localStorage.setItem(TOKEN_KEY, token);
         this.token = token;
         this.user = user;
+        this.logined = true;
+        this.token = token;
         Message.success("登录成功");
         return true;
       } catch (err: any) {
         Message.error(err);
         return false;
       }
+    },
+
+    LoginOut() {
+      this.logined = false;
+      this.user = {};
+      this.token = "";
+      window.localStorage.removeItem(USER_INFO_KEY);
+      window.localStorage.removeItem(TOKEN_KEY);
     },
   },
 });

@@ -12,4 +12,6 @@ export interface UserInfo {
   avatar: string;
   account: string;
   nickName: string;
+  language: "zn" | "cn";
+  rule: "admin" | "user";
 }
