@@ -7,6 +7,8 @@ export interface HttpResponse<T extends any> {
   message?: string;
 }
 
+export type HttpParams = Record<string, string | number>;
+
 const http = axios.create({
   baseURL: import.meta.env.VITE_PROXY,
   timeout: 5000,
@@ -33,10 +35,7 @@ http.interceptors.response.use(
   }
 );
 
-export function Get<T>(
-  url: string,
-  param?: Record<string, string | number>
-): Promise<T> {
+export function Get<T>(url: string, param?: HttpParams): Promise<T> {
   let paramString = "";
   if (param) {
     const stringArr = [];
@@ -51,7 +50,7 @@ export function Get<T>(
       .then((res) => {
         const { data } = res;
         if (data.stateCode === 200) {
-          resolve(res.data.data);
+          resolve(data.data);
         } else {
           reject(data.err);
         }
@@ -69,7 +68,7 @@ export function Post<T>(url: string, data: any): Promise<T> {
       .then((res) => {
         const { data } = res;
         if (data.stateCode === 200) {
-          resolve(res.data.data);
+          resolve(data.data);
         } else {
           reject(data.message);
         }

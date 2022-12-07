@@ -21,4 +21,19 @@ export default [
       };
     },
   },
+
+  {
+    url: "/api/v1/user/login",
+    method: "post",
+    response: (res, req) => {
+      console.log(res, req);
+
+      return {
+        stateCode: 200,
+        message: "ok",
+        data: {},
+        err: `登录成功`,
+      };
+    },
+  },
 ];
