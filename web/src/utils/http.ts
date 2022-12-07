@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
+export const TOKEN_KEY = "anya-token";
+
 export interface HttpResponse<T extends any> {
   stateCode: number;
   data: T;

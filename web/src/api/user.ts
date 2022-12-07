@@ -1,9 +1,10 @@
+import { LoginInfo, UserInfo } from "@/types/user";
 import { Get, HttpParams, Post } from "@/utils/http";
 
 export async function getCaptcha<T>(params?: HttpParams) {
   return await Get<T>(`user/captcha`, params);
 }
 
-export async function Login(userinfo: any) {
-  return await Post(`user/login`, userinfo);
+export async function Login(userinfo: LoginInfo) {
+  return await Post<{ user: UserInfo; token: string }>(`user/login`, userinfo);
 }

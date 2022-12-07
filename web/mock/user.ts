@@ -26,11 +26,16 @@ export default [
     url: "/api/v1/user/login",
     method: "post",
     response: ({ body }) => {
-      console.log(body);
+      delete body.password;
+      delete body.captcha;
+      const token = mock.Random.word(20, 50);
       return {
         stateCode: 200,
         message: "ok",
-        data: body,
+        data: {
+          user: body,
+          token,
+        },
         err: `登录成功`,
       };
     },

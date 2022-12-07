@@ -30,7 +30,7 @@
                 placeholder="请输入验证码"
               />
               <div
-                class="w-30 flex items-center justify-center cursor-pointer"
+                class="w-30 flex items-center justify-center cursor-pointer cap-bg"
                 @click="captcha"
               >
                 <a-spin class="h-full" :loading="captchaImg.image === ''">
@@ -39,11 +39,18 @@
               </div>
             </div>
           </a-form-item>
-          <a-form-item field="remember">
-            <a-checkbox v-model="form.remember"> 记住密码 </a-checkbox>
-          </a-form-item>
           <a-form-item>
-            <a-button html-type="submit">登陆</a-button>
+            <a-button
+              html-type="submit"
+              type="primary"
+              long
+              :loading="btnLading"
+            >
+              <div class="flex items-center">
+                <div class="icon i-tabler-login w-6 h-6"></div>
+                <span class="m-3">登录</span>
+              </div>
+            </a-button>
           </a-form-item>
         </a-form>
         <a-row>
@@ -66,8 +73,9 @@
 import { getCaptcha } from "@/api/user";
 import Mode from "@/layouts/mode.vue";
 import { useUserStore } from "@/store";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 const userStore = useUserStore();
+const btnLading = ref(false);
 
 const captchaImg = reactive({
   id: "",
@@ -97,13 +105,25 @@ onMounted(() => {
   captcha();
 });
 
-const handleSubmit = (data: any) => {
+const handleSubmit = async (data: any) => {
   if (data.errors) {
     console.log(data.errors);
     return;
   }
 
-  userStore.login(data.values);
+  btnLading.value = true;
+
+  const islogin = await userStore.login({
+    ...data.values,
+    captcha: {
+      text: data.values.captcha,
+      id: captchaImg.id,
+    },
+  });
+
+  btnLading.value = false;
+
+  console.log(islogin);
 };
 </script>
 <style lang="scss" scoped>
@@ -118,5 +138,9 @@ const handleSubmit = (data: any) => {
   align-items: flex-start;
   box-sizing: border-box;
   padding: 10px;
+}
+
+.cap-bg {
+  background-color: var(--color-fill-2);
 }
 </style>
