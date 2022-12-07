@@ -7,8 +7,11 @@
       <div class="cursor-pointer" @click="setsider">
         <div
           :class="[
-            setting.themeSetting.collapsed ? 'i-tabler-arrows-right' : 'i-tabler-arrows-left',
+            setting.themeSetting.collapsed
+              ? 'i-tabler-arrows-right'
+              : 'i-tabler-arrows-left',
             'icon',
+            'w-8 h-8',
           ]"
         />
       </div>
