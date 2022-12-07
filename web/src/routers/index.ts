@@ -20,8 +20,14 @@ export function createAppRouters(app: App) {
   const router = createRouter(routerOptions);
 
   router.beforeEach((to, from) => {
-    console.log("from", from);
     const user = useUserStore();
+    if (to.name === "login") {
+      return true;
+    }
+
+    if (!user.logined) {
+      return { path: "/login" };
+    }
 
     return true;
   });

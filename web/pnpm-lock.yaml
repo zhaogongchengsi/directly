@@ -12,6 +12,7 @@ specifiers:
   '@vueuse/core': ^9.6.0
   axios: ^1.2.0
   dotenv: ^16.0.3
+  md5-es: ^1.8.2
   mockjs: ^1.1.0
   pinia: ^2.0.26
   sass: ^1.56.1
@@ -30,6 +31,7 @@ dependencies:
   '@unocss/reset': 0.46.5
   '@vueuse/core': 9.6.0_vue@3.2.45
   axios: 1.2.0
+  md5-es: registry.npmmirror.com/md5-es/1.8.2
   pinia: 2.0.26_typescript@4.9.3+vue@3.2.45
   vue: 3.2.45
   vue-router: 4.1.6_vue@3.2.45
@@ -2005,6 +2007,12 @@ packages:
     dependencies:
       sourcemap-codec: registry.npmmirror.com/sourcemap-codec/1.4.8
     dev: true
+
+  registry.npmmirror.com/md5-es/1.8.2:
+    resolution: {integrity: sha512-LKq5jmKMhJYhsBFUh2w+J3C4bMiC5uQie/UYJ429UATmMnFr6iANO2uQq5HXAZSIupGp0WO2mH3sNfxR4XO40Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/md5-es/-/md5-es-1.8.2.tgz}
+    name: md5-es
+    version: 1.8.2
+    dev: false
 
   registry.npmmirror.com/merge-stream/2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/merge-stream/-/merge-stream-2.0.0.tgz}

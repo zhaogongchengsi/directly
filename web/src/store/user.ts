@@ -2,7 +2,9 @@ import { Login } from "@/api/user";
 import { TOKEN_KEY } from "@/utils/http";
 import { LoginInfo, UserInfo } from "@/types/user";
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import md5 from "md5-es";
+import { Message } from "@arco-design/web-vue";
+
 export const USER_INFO_KEY = "anya-userInfo";
 
 export const useUserStore = defineStore("user", {
@@ -10,24 +12,28 @@ export const useUserStore = defineStore("user", {
     const userInfo = window.localStorage.getItem(USER_INFO_KEY);
     const token = window.localStorage.getItem(TOKEN_KEY);
     if (userInfo && token && token != "") {
-      const user = reactive<UserInfo>(JSON.parse(userInfo));
+      const user: UserInfo = JSON.parse(userInfo);
       return { user, logined: true, token };
     }
 
-    return { user: {}, token: "" };
+    return { user: {}, token: "", logined: false };
   },
 
   actions: {
     async login(userinfo: LoginInfo) {
       try {
-        const { user, token } = await Login(userinfo);
+        const { user, token } = await Login({
+          ...userinfo,
+          password: md5.hash(userinfo.password),
+        });
         window.localStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
         window.localStorage.setItem(TOKEN_KEY, token);
         this.token = token;
         this.user = user;
+        Message.success("登录成功");
         return true;
-      } catch (err) {
-        console.error(err);
+      } catch (err: any) {
+        Message.error(err);
         return false;
       }
     },

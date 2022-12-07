@@ -73,7 +73,10 @@
 import { getCaptcha } from "@/api/user";
 import Mode from "@/layouts/mode.vue";
 import { useUserStore } from "@/store";
+import { useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
+
+const router = useRouter();
 const userStore = useUserStore();
 const btnLading = ref(false);
 
@@ -123,7 +126,9 @@ const handleSubmit = async (data: any) => {
 
   btnLading.value = false;
 
-  console.log(islogin);
+  if (islogin) {
+    router.push("/");
+  }
 };
 </script>
 <style lang="scss" scoped>

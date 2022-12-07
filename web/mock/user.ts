@@ -29,11 +29,22 @@ export default [
       delete body.password;
       delete body.captcha;
       const token = mock.Random.word(20, 50);
+      const avatar = mock.Random.image(
+        "200x200",
+        mock.Random.rgb(),
+        mock.Random.rgb(),
+        "admin"
+      );
+
       return {
         stateCode: 200,
         message: "ok",
         data: {
-          user: body,
+          user: {
+            avatar,
+            account: body.account,
+            nickName: "admin",
+          },
           token,
         },
         err: `登录成功`,
