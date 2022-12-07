@@ -1,4 +1,7 @@
 import { getRoutersAsync } from "@/api/user";
+import { RouterAsyncRow } from "@/types/user";
+
+function routerReplace(routers: RouterAsyncRow[], modules: any) {}
 
 export async function useRouterAsync() {
   try {
