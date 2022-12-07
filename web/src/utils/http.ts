@@ -4,7 +4,7 @@ export interface HttpResponse<T extends any> {
   stateCode: number;
   data: T;
   err?: string;
-  message: string;
+  message?: string;
 }
 
 const http = axios.create({
@@ -33,10 +33,21 @@ http.interceptors.response.use(
   }
 );
 
-export function Get<T>(url: string): Promise<T> {
+export function Get<T>(
+  url: string,
+  param?: Record<string, string | number>
+): Promise<T> {
+  let paramString = "";
+  if (param) {
+    const stringArr = [];
+    for (const [key, value] of Object.entries(param)) {
+      stringArr.push(`${key}=${value}`);
+      paramString = "?" + stringArr.join("&");
+    }
+  }
   return new Promise((resolve, reject) => {
     http
-      .get<any, AxiosResponse<HttpResponse<T>, any>, any>(url)
+      .get<any, AxiosResponse<HttpResponse<T>, any>, any>(url + paramString)
       .then((res) => {
         const { data } = res;
         if (data.stateCode === 200) {
@@ -54,13 +65,13 @@ export function Get<T>(url: string): Promise<T> {
 export function Post<T>(url: string, data: any): Promise<T> {
   return new Promise((resolve, reject) => {
     http
-      .post<any, AxiosResponse<HttpResponse<T>, any>, any>(url, data)
+      .post<any, AxiosResponse<HttpResponse<T>>>(url, data)
       .then((res) => {
         const { data } = res;
         if (data.stateCode === 200) {
           resolve(res.data.data);
         } else {
-          reject(data.err);
+          reject(data.message);
         }
       })
       .catch((err) => {

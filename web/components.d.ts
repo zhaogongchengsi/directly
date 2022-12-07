@@ -28,6 +28,7 @@ declare module '@vue/runtime-core' {
     AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
     ARow: typeof import('@arco-design/web-vue')['Row']
     ASpace: typeof import('@arco-design/web-vue')['Space']
+    ASpin: typeof import('@arco-design/web-vue')['Spin']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ATypographyTitle: typeof import('@arco-design/web-vue')['TypographyTitle']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']

@@ -29,7 +29,14 @@
                 v-model="form.post"
                 placeholder="请输入验证码"
               />
-              <div class="w-30">验证码</div>
+              <div
+                class="w-30 flex items-center justify-center cursor-pointer"
+                @click="captcha"
+              >
+                <a-spin class="h-full" :loading="captchaImg.image === ''">
+                  <img class="h-full" :src="captchaImg.image" alt="" />
+                </a-spin>
+              </div>
             </div>
           </a-form-item>
           <a-form-item field="isRead">
@@ -65,9 +72,16 @@ const captchaImg = reactive({
   image: "",
 });
 
-const captcha = async () => {
-  const res = await getCaptcha();
-  console.log(res);
+const captcha = () => {
+  captchaImg.image = "";
+  getCaptcha<{ id: string; image: string }>({ width: 100, height: 30 })
+    .then((res) => {
+      captchaImg.id = res.id;
+      captchaImg.image = res.image;
+    })
+    .catch((message) => {
+      console.log(message);
+    });
 };
 
 onMounted(() => {
