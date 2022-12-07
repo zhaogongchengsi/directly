@@ -25,13 +25,12 @@ export default [
   {
     url: "/api/v1/user/login",
     method: "post",
-    response: (res, req) => {
-      console.log(res, req);
-
+    response: ({ body }) => {
+      console.log(body);
       return {
         stateCode: 200,
         message: "ok",
-        data: {},
+        data: body,
         err: `登录成功`,
       };
     },
