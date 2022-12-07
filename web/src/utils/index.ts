@@ -1,2 +1,1 @@
-
-export {}
+export { Get, Post } from "./http";

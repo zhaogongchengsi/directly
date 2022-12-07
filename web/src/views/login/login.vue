@@ -60,6 +60,11 @@ import { getCaptcha } from "@/api/user";
 import Mode from "@/layouts/mode.vue";
 import { onMounted, reactive } from "vue";
 
+const captchaImg = reactive({
+  id: "",
+  image: "",
+});
+
 const captcha = async () => {
   const res = await getCaptcha();
   console.log(res);
