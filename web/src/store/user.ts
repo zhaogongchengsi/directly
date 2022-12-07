@@ -15,7 +15,6 @@ export const useUserStore = defineStore("user", {
       const user: UserInfo = JSON.parse(userInfo);
       return { user, logined: true, token };
     }
-
     return { user: {}, token: "", logined: false };
   },
 

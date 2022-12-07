@@ -9,8 +9,8 @@ import { createAppStore } from "./store";
 const app = createApp(App);
 
 async function bootstrap() {
-  createAppRouters(app);
   createAppStore(app);
+  await createAppRouters(app);
   app.mount("#app");
 }
 

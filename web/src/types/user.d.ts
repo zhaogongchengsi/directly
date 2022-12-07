@@ -1,3 +1,5 @@
+import type { RouteRecordRaw } from "vue-router";
+
 export interface LoginInfo {
   account: string;
   password: string;
@@ -15,3 +17,14 @@ export interface UserInfo {
   language: "zn" | "cn";
   rule: "admin" | "user";
 }
+
+export interface RouterMeTa {
+  title: string;
+  isMenu: boolean;
+  icon?: string;
+  auth?: boolean;
+}
+
+export type RouterAsyncRow = {
+  meta: RouterMeTa;
+} & RouteRecordRaw;

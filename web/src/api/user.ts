@@ -8,3 +8,7 @@ export async function getCaptcha<T>(params?: HttpParams) {
 export async function Login(userinfo: LoginInfo) {
   return await Post<{ user: UserInfo; token: string }>(`user/login`, userinfo);
 }
+
+export async function getRoutersAsync() {
+  return await Get("router/routers");
+}

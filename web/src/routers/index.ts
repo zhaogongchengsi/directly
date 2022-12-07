@@ -1,17 +1,37 @@
+import { useRouterAsync } from "@/hooks/useRouter";
 import { useUserStore } from "@/store";
+import { RouterAsyncRow } from "@/types/user";
 import type { App } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
-const routes = [
-  { path: "/", component: () => import("../views/index.vue"), name: "home" },
+const routes: RouterAsyncRow[] = [
+  {
+    path: "/",
+    component: () => import("../views/index.vue"),
+    name: "home",
+    meta: {
+      title: "Home",
+      isMenu: false,
+      auth: true,
+    },
+  },
   {
     path: "/login",
     component: () => import("../views/login/login.vue"),
     name: "login",
+    meta: {
+      title: "login",
+      auth: false,
+      isMenu: false,
+    },
   },
 ];
 
-export function createAppRouters(app: App) {
+export async function createAppRouters(app: App) {
+  const asyncRouter = await useRouterAsync();
+
+  console.log(asyncRouter);
+
   const routerOptions = {
     history: createWebHistory(),
     routes,
@@ -20,12 +40,13 @@ export function createAppRouters(app: App) {
   const router = createRouter(routerOptions);
 
   router.beforeEach((to, from) => {
-    const user = useUserStore();
-    if (to.name === "login") {
+    if (!to?.meta.auth || to.name === "login") {
       return true;
     }
 
-    if (!user.logined) {
+    const user = useUserStore();
+
+    if (!user.logined && !user.token) {
       return { path: "/login" };
     }
 
