@@ -1,7 +1,7 @@
 <template>
   <a-menu
-    :default-open-keys="['0']"
-    :default-selected-keys="['0_2']"
+    @menu-item-click="menuItmeClick"
+    @sub-menu-click="subMenuClick"
   >
     <base-menu :menus="menus"></base-menu>
   </a-menu>
@@ -13,8 +13,6 @@ import { IconCalendar } from "@arco-design/web-vue/es/icon";
 import { RouteRecordRaw, useRouter } from "vue-router";
 import { MenuInfo, RouterMeTa } from "@/types/user";
 import BaseMenu from "./BaseMenu.vue";
-
-
 
 export default defineComponent({
   name: "Menu",
@@ -55,8 +53,18 @@ export default defineComponent({
       return menuTree(getRoutes.value!);
     });
 
+    const menuItmeClick = (key: string) => {
+      console.log(key);
+    };
+
+    const subMenuClick = (key: string) => {
+      // console.log(key);
+    };
+
     return {
       menus,
+      menuItmeClick,
+      subMenuClick,
     };
   },
 });

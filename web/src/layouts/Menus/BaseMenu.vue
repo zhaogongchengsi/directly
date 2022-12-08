@@ -3,12 +3,19 @@
     v-for="menu of menuTree"
     :key="menu.name"
   >
-    <a-sub-menu v-if="menu.children && menu.children.length > 0">
-      <template #icon>{{ menu.icon }}</template>
-      <template #title>{{ menu.title }}</template>
-      <base-menu :menus="menu.children" />
-    </a-sub-menu>
-    <a-menu-item v-else>{{ menu.title }}</a-menu-item>
+    <template v-if="menu.children && menu.children.length > 0">
+      <a-sub-menu :key="menu.path">
+        <template #icon>{{ menu.icon }}</template>
+        <template #title>{{ menu.title }}</template>
+        <base-menu
+          :menus="menu.children"
+          :parent-path="pathMerge(menu.path)"
+        />
+      </a-sub-menu>
+    </template>
+    <template v-else>
+      <a-menu-item :key="pathMerge(menu.path)">{{ menu.title }}</a-menu-item>
+    </template>
   </template>
 </template>
 <script lang="ts">
@@ -22,11 +29,22 @@ export default defineComponent({
       type: Array,
       default: [],
     },
+    parentPath: {
+      type: String,
+      defaule: "/",
+    },
   },
   setup(props) {
     const menuTree = computed(() => props.menus) as unknown as MenuInfo[];
+
+    const pathMerge = (path: string) => {
+      const newPath = [props.parentPath, path].join("/");
+      return newPath;
+    };
+
     return {
       menuTree: menuTree,
+      pathMerge,
     };
   },
 });
