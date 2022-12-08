@@ -14,7 +14,7 @@
     <a-layout>
       <Header />
       <a-layout>
-        <a-layout-content> <HelloWorld msg="Hello Anya" /> </a-layout-content>
+        <a-layout-content> <custom-router-view /> </a-layout-content>
       </a-layout>
     </a-layout>
   </a-layout>
@@ -25,6 +25,11 @@ import Header from "@/layouts/Header/index.vue";
 import Menus from "@/layouts/Menus/index.vue";
 import Logo from "@/layouts/Logo/index.vue";
 import { useThemeStore } from "@/store";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+console.log(router.getRoutes());
 
 const theme = useThemeStore();
 

@@ -1,8 +1,5 @@
 <template>
-  <div class="list">
-    <h3>list</h3>
-    <router-view></router-view>
-  </div>
+  <div>页面走丢了</div>
 </template>
 <script setup lang="ts"></script>
 <style lang="scss"></style>

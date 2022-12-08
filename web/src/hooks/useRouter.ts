@@ -1,5 +1,6 @@
 import { getRoutersAsync } from "@/api/user";
 import { RouterAsyncRow } from "@/types/user";
+import ComponentNotExit from "@/layouts/ComponNotExist/index.vue";
 
 const modules = import.meta.glob("../views/**/*.vue");
 
@@ -48,23 +49,31 @@ function modulesOrganize(modules: Modules) {
 }
 
 function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
-  const roorRouter = routers.filter(({ pid }) => {
+  const _router = routers.map((r) => {
+    const component = searchModuleComponent(r, modules);
+    componentReplace(r, component);
+    return r;
+  });
+
+  const roorRouter = _router.filter(({ pid }) => {
     return pid === 0;
   });
-  const childRouter = routers.filter(({ pid }) => {
+  const childRouter = _router.filter(({ pid }) => {
     return pid != 0;
   });
 
   function componentReplace(router: RouterAsyncRow, module?: ImportModule) {
-    router.component = module;
+    if (!module) {
+      // 路由不存在替换为 异常组件
+      router.component = ComponentNotExit;
+    } else {
+      router.component = module;
+    }
   }
 
   function toTree(prouter: RouterAsyncRow[], crouter: RouterAsyncRow[]) {
     prouter.forEach((pitem) => {
-      const component = searchModuleComponent(pitem, modules);
-      componentReplace(pitem, component);
       crouter.forEach((citem) => {
-        componentReplace(citem, component);
         if (pitem.id === citem.pid) {
           toTree([citem], crouter);
           if (pitem.children) {
@@ -82,11 +91,17 @@ function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
   return toTree(roorRouter, childRouter);
 }
 
+/**
+ *
+ * @description 将后端请求过来的扁平化路由数据 转化为真实的路由树形数据 并且将组件替换为真实的组件
+ */
 export async function useRouterAsync() {
   try {
     const router = await getRoutersAsync();
-    console.log(routerTravel(router, modulesOrganize(modules)));
+    const routerRec = routerTravel(router, modulesOrganize(modules));
+    return routerRec;
   } catch (err) {
     console.log(err);
+    return [];
   }
 }

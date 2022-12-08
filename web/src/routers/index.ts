@@ -1,43 +1,16 @@
 import { useRouterAsync } from "@/hooks/useRouter";
 import { useUserStore } from "@/store";
-import { RouterAsyncRow } from "@/types/user";
 import type { App } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
-
-const routes: RouterAsyncRow[] = [
-  {
-    path: "/",
-    component: () => import("../views/index.vue"),
-    name: "home",
-    meta: {
-      title: "Home",
-      isMenu: false,
-      auth: true,
-    },
-  },
-  {
-    path: "/login",
-    component: () => import("../views/login/login.vue"),
-    name: "login",
-    meta: {
-      title: "login",
-      auth: false,
-      isMenu: false,
-    },
-  },
-];
+import { createDefaultRouter } from "./base";
 
 export async function createAppRouters(app: App) {
-  const asyncRouter = await useRouterAsync();
+  const asyncRouters = await useRouterAsync();
 
-  console.log(asyncRouter);
-
-  const routerOptions = {
+  const router = createRouter({
     history: createWebHistory(),
-    routes,
-  };
-
-  const router = createRouter(routerOptions);
+    routes: createDefaultRouter(asyncRouters),
+  });
 
   router.beforeEach((to, from) => {
     if (!to?.meta.auth || to.name === "login") {

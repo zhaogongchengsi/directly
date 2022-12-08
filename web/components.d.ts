@@ -32,7 +32,9 @@ declare module '@vue/runtime-core' {
     ASpin: typeof import('@arco-design/web-vue')['Spin']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ATypographyTitle: typeof import('@arco-design/web-vue')['TypographyTitle']
+    CustomVIew: typeof import('./src/components/CustomVIew/index.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    NotFound: typeof import('./src/components/NotFound.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

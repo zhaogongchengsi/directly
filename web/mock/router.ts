@@ -2,7 +2,7 @@ const routers = [
   {
     pid: 0,
     id: 1,
-    path: "/dashboard",
+    path: "dashboard",
     component: "/views/dashboard",
     name: "dashboard",
     meta: {
@@ -14,7 +14,7 @@ const routers = [
   {
     pid: 0,
     id: 2,
-    path: "/list",
+    path: "list",
     component: "/views/list",
     name: "list",
     meta: {
@@ -26,7 +26,7 @@ const routers = [
   {
     pid: 1,
     id: 3,
-    path: "/workplace",
+    path: "workplace",
     component: "/views/dashboard/workplace.vue",
     name: "workplace",
     meta: {
@@ -38,7 +38,7 @@ const routers = [
   {
     pid: 2,
     id: 4,
-    path: "/list/search-table",
+    path: "search-table",
     component: "/views/list/SearchTable.vue",
     name: "搜索表格",
     meta: {
@@ -50,8 +50,8 @@ const routers = [
   {
     pid: 3,
     id: 5,
-    path: "/place",
-    component: "/views/dashboard/place.vue",
+    path: "place",
+    component: "/views/dashboard/piace.vue",
     name: "place",
     meta: {
       title: "操控台",
