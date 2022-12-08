@@ -1,4 +1,4 @@
-import type { RouteRecordRaw } from "vue-router";
+import type { RouteRecordRaw, RawRouteComponent } from "vue-router";
 
 export interface LoginInfo {
   account: string;
@@ -30,4 +30,5 @@ export type RouterAsyncRow = {
   id?: number;
   meta: RouterMeTa;
   children?: RouterAsyncRow[];
+  component: string | RawRouteComponent;
 } & RouteRecordRaw;
