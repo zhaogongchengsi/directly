@@ -1,8 +1,25 @@
 <template>
-  <div>首页</div>
+  <a-layout class="h-screen">
+    <a-layout-sider
+      :theme="theme.themeMode"
+      :width="theme.themeSetting.asiderWidth"
+      :collapsed="theme.themeSetting.collapsed"
+      collapsible
+      breakpoint="lg"
+      @collapse="onCollapse"
+    >
+      <Logo />
+      <Menus />
+    </a-layout-sider>
+    <a-layout>
+      <Header />
+      <a-layout>
+        <a-layout-content> <custom-router-view /> </a-layout-content>
+      </a-layout>
+    </a-layout>
+  </a-layout>
 </template>
 <script setup lang="ts">
-import HelloWorld from "@/components/HelloWorld.vue";
 import Header from "@/layouts/Header/index.vue";
 import Menus from "@/layouts/Menus/index.vue";
 import Logo from "@/layouts/Logo/index.vue";
