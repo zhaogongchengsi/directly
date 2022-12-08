@@ -1,20 +1,21 @@
 <template>
-  <template
-    v-for="menu of menuTree"
-    :key="menu.name"
-  >
+  <template v-for="menu of menuTree" :key="menu.name">
     <template v-if="menu.children && menu.children.length > 0">
       <a-sub-menu :key="menu.path">
-        <template #icon>{{ menu.icon }}</template>
+        <template #icon v-if="menu.icon">
+          <component :is="menu.icon" />
+        </template>
         <template #title>{{ menu.title }}</template>
-        <base-menu
-          :menus="menu.children"
-          :parent-path="pathMerge(menu.path)"
-        />
+        <base-menu :menus="menu.children" :parent-path="pathMerge(menu.path)" />
       </a-sub-menu>
     </template>
     <template v-else>
-      <a-menu-item :key="pathMerge(menu.path)">{{ menu.title }}</a-menu-item>
+      <a-menu-item :key="pathMerge(menu.path)">
+        <template #icon v-if="menu.icon">
+          <component :is="menu.icon" />
+        </template>
+        {{ menu.title }}
+      </a-menu-item>
     </template>
   </template>
 </template>

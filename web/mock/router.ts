@@ -9,6 +9,7 @@ const routers = [
       title: "体表盘",
       auth: false,
       isMenu: true,
+      icon: "icon-menu",
     },
   },
   {
@@ -21,6 +22,7 @@ const routers = [
       title: "表格",
       auth: false,
       isMenu: true,
+      icon: "icon-menu",
     },
   },
   {
@@ -33,6 +35,7 @@ const routers = [
       title: "仪表盘",
       auth: false,
       isMenu: true,
+      icon: "icon-menu",
     },
   },
   {
@@ -45,6 +48,7 @@ const routers = [
       title: "搜索表格",
       auth: false,
       isMenu: true,
+      icon: "icon-menu",
     },
   },
   {
@@ -57,6 +61,7 @@ const routers = [
       title: "操控台",
       auth: false,
       isMenu: true,
+      icon: "icon-menu",
     },
   },
 ];

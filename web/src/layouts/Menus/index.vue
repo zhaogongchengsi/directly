@@ -2,6 +2,9 @@
   <a-menu
     @menu-item-click="menuItmeClick"
     @sub-menu-click="subMenuClick"
+    :collapse="setting.themeSetting.collapsed"
+    :theme="setting.themeMode"
+    accordion
   >
     <base-menu :menus="menus"></base-menu>
   </a-menu>
@@ -13,12 +16,14 @@ import { IconCalendar } from "@arco-design/web-vue/es/icon";
 import { RouteRecordRaw, useRouter } from "vue-router";
 import { MenuInfo, RouterMeTa } from "@/types/user";
 import BaseMenu from "./BaseMenu.vue";
+import { useThemeStore } from "@/store";
 
 export default defineComponent({
   name: "Menu",
   components: { IconCalendar, BaseMenu },
   setup() {
     const router = useRouter();
+    const setting = useThemeStore();
 
     const menuTree = (routers: readonly RouteRecordRaw[]): MenuInfo[] => {
       const cloneRouters = routers?.map((router): MenuInfo | null => {
@@ -54,7 +59,7 @@ export default defineComponent({
     });
 
     const menuItmeClick = (key: string) => {
-      console.log(key);
+      router.push(key);
     };
 
     const subMenuClick = (key: string) => {
@@ -65,6 +70,7 @@ export default defineComponent({
       menus,
       menuItmeClick,
       subMenuClick,
+      setting,
     };
   },
 });
