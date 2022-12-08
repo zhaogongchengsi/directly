@@ -26,5 +26,8 @@ export interface RouterMeTa {
 }
 
 export type RouterAsyncRow = {
+  pid?: number;
+  id?: number;
   meta: RouterMeTa;
+  children?: RouterAsyncRow[];
 } & RouteRecordRaw;

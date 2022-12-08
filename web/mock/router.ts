@@ -30,7 +30,7 @@ const routers = [
     component: "/views/dashboard/workplace.vue",
     name: "workplace",
     meta: {
-      title: "体表盘",
+      title: "仪表盘",
       auth: false,
       isMenu: true,
     },
@@ -43,6 +43,18 @@ const routers = [
     name: "搜索表格",
     meta: {
       title: "搜索表格",
+      auth: false,
+      isMenu: true,
+    },
+  },
+  {
+    pid: 3,
+    id: 5,
+    path: "/place",
+    component: "/views/dashboard/place.vue",
+    name: "place",
+    meta: {
+      title: "操控台",
       auth: false,
       isMenu: true,
     },

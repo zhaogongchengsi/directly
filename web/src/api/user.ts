@@ -1,4 +1,4 @@
-import { LoginInfo, UserInfo } from "@/types/user";
+import { LoginInfo, RouterAsyncRow, UserInfo } from "@/types/user";
 import { Get, HttpParams, Post } from "@/utils/http";
 
 export async function getCaptcha<T>(params?: HttpParams) {
@@ -10,5 +10,5 @@ export async function Login(userinfo: LoginInfo) {
 }
 
 export async function getRoutersAsync() {
-  return await Get("router/routers");
+  return await Get<RouterAsyncRow[]>("router/routers");
 }
