@@ -40,7 +40,7 @@ const routers = [
     id: 4,
     path: "search-table",
     component: "/views/list/SearchTable.vue",
-    name: "搜索表格",
+    name: "searchTable",
     meta: {
       title: "搜索表格",
       auth: false,

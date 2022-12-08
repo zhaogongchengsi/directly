@@ -32,3 +32,11 @@ export type RouterAsyncRow = {
   children?: RouterAsyncRow[];
   component: string | RawRouteComponent;
 } & RouteRecordRaw;
+
+interface MenuInfo {
+  icon?: string;
+  title: string;
+  path: string;
+  name?: string;
+  children: MenuInfo[];
+}

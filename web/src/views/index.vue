@@ -1,22 +1,7 @@
 <template>
-  <div>首页</div>
+  <HelloWorld msg="hello Anya" />
 </template>
 <script setup lang="ts">
 import HelloWorld from "@/components/HelloWorld.vue";
-import Header from "@/layouts/Header/index.vue";
-import Menus from "@/layouts/Menus/index.vue";
-import Logo from "@/layouts/Logo/index.vue";
-import { useThemeStore } from "@/store";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-console.log(router.getRoutes());
-
-const theme = useThemeStore();
-
-const onCollapse = (val: boolean) => {
-  theme.themeSetting.collapsed = val;
-};
 </script>
 <style lang="scss"></style>
