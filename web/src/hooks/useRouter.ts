@@ -1,6 +1,7 @@
 import { getRoutersAsync } from "@/api/user";
 import { RouterAsyncRow } from "@/types/user";
 import ComponentNotExit from "@/layouts/ComponNotExist/index.vue";
+import { TOKEN_KEY } from "@/utils/http";
 
 const modules = import.meta.glob("../views/**/*.vue");
 
@@ -96,6 +97,13 @@ function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
  * @description 将后端请求过来的扁平化路由数据 转化为真实的路由树形数据 并且将组件替换为真实的组件
  */
 export async function useRouterAsync() {
+  // const token = window.localStorage.getItem(TOKEN_KEY);
+
+  // if (!token) {
+  //   window.location.href = "/login";
+  //   return [];
+  // }
+
   try {
     const router = await getRoutersAsync();
     const routerRec = routerTravel(router, modulesOrganize(modules));

@@ -13,7 +13,7 @@ export async function createAppRouters(app: App) {
   });
 
   router.beforeEach((to, from) => {
-    if (!to?.meta.auth || to.name === "login") {
+    if ((to?.meta.auth != undefined && to?.meta.auth != false) || to.name === "login") {
       return true;
     }
 

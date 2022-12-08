@@ -18,7 +18,7 @@ const http = axios.create({
 
 http.interceptors.request.use(
   function (config) {
-    const token = "123123123123123asdjasdoi";
+    const token = window.localStorage.getItem(TOKEN_KEY);
     config.headers && (config.headers["Authorization"] = `Bearer ${token}`);
     return config;
   },
