@@ -25,12 +25,7 @@ import Menus from "@/layouts/Menus/index.vue";
 import Logo from "@/layouts/Logo/index.vue";
 import { useThemeStore } from "@/store";
 
-// import { useRouter } from "vue-router";
-// const router = useRouter();
-// console.log(router.getRoutes());
-
 const theme = useThemeStore();
-
 const onCollapse = (val: boolean) => {
   theme.themeSetting.collapsed = val;
 };

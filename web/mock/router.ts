@@ -6,10 +6,10 @@ const routers = [
     component: "/views/dashboard",
     name: "dashboard",
     meta: {
-      title: "体表盘",
+      title: "仪表盘",
       auth: false,
       isMenu: true,
-      icon: "icon-menu",
+      icon: "icon-dashboard",
     },
   },
   {
@@ -19,10 +19,10 @@ const routers = [
     component: "/views/list",
     name: "list",
     meta: {
-      title: "表格",
+      title: "列表页",
       auth: false,
       isMenu: true,
-      icon: "icon-menu",
+      icon: "icon-unordered-list",
     },
   },
   {
@@ -32,10 +32,10 @@ const routers = [
     component: "/views/dashboard/workplace.vue",
     name: "workplace",
     meta: {
-      title: "仪表盘",
+      title: "工作台",
       auth: false,
       isMenu: true,
-      icon: "icon-menu",
+      icon: "icon-common",
     },
   },
   {
@@ -48,20 +48,7 @@ const routers = [
       title: "搜索表格",
       auth: false,
       isMenu: true,
-      icon: "icon-menu",
-    },
-  },
-  {
-    pid: 3,
-    id: 5,
-    path: "place",
-    component: "/views/dashboard/piace.vue",
-    name: "place",
-    meta: {
-      title: "操控台",
-      auth: false,
-      isMenu: true,
-      icon: "icon-menu",
+      icon: "icon-fire",
     },
   },
   {
@@ -74,7 +61,7 @@ const routers = [
       title: "异常组件",
       auth: false,
       isMenu: true,
-      icon: "icon-menu",
+      icon: "icon-exclamation-polygon-fill",
     },
   },
 ];
