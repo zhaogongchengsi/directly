@@ -30,7 +30,6 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   function (response) {
-    
     // token 续费
     const newToken = response.headers["new-token"];
     if (newToken) {
