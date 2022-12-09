@@ -5,3 +5,8 @@
 .light .icon {
   color: #333;
 }
+
+body[arco-theme="dark"] {
+  background-color: var(--color-bg-2);
+  color: var(--color-white);
+}

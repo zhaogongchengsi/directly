@@ -64,6 +64,19 @@ const routers = [
       icon: "icon-menu",
     },
   },
+  {
+    pid: 0,
+    id: 6,
+    path: "notComponent",
+    component: "/views/notComponent",
+    name: "notExist",
+    meta: {
+      title: "异常组件",
+      auth: false,
+      isMenu: true,
+      icon: "icon-menu",
+    },
+  },
 ];
 
 export default [
