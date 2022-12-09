@@ -31,6 +31,8 @@ body {
   // 滚动轨道
   --scrollbar-track-color: transparent;
   --scrollbar-track-radius: 0;
+
+  --scrollber-corner-color: transparent;
 }
 
 @mixin scrollbar {
@@ -58,7 +60,7 @@ body {
 
   // x 和 y 滚动条交接的地方 一般在屏幕右下角
   &::-webkit-scrollbar-corner {
-    background-color: aquamarine;
+    background-color: var(--scrollber-corner-color, transparent);
   }
 }
 

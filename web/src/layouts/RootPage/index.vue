@@ -13,8 +13,8 @@
     </a-layout-sider>
     <a-layout>
       <Header />
-      <a-layout>
-        <a-layout-content> <custom-router-view /> </a-layout-content>
+      <a-layout class="overflow-auto app-scrollbar" :style="{ height: `calc(100vh - ${theme.themeSetting.headerHeight || 60}px)` }">
+        <a-layout-content class="scrollbar"> <custom-router-view /> </a-layout-content>
       </a-layout>
     </a-layout>
   </a-layout>
@@ -35,4 +35,7 @@ const onCollapse = (val: boolean) => {
   theme.themeSetting.collapsed = val;
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.app-main-container {
+}
+</style>
