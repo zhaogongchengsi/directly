@@ -67,7 +67,7 @@ function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
     if (!module) {
       // 路由不存在替换为 异常组件
       const comp = router.component;
-      router.props = { componentPath: comp };
+      router.props = { componentPath: comp, modules: Array.from(modules.keys()) };
       router.component = ComponentNotExit;
     } else {
       router.component = module;

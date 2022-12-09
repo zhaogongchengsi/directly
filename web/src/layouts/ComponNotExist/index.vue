@@ -8,17 +8,29 @@
         <h1 class="text-3xl ml-3">组件不存在 请检查组件路径是否正确 组件是否存在</h1>
       </div>
 
-      <div class="flex items-center text-xl font-sans font-semibold">
-        <span class="mr-5">文件路径</span>
-        <code class="px-3 py-0.5 border-rd-2 bg-gray-400 text-gray-50 dark:bg-gray-900 border border-gray-400">{{ props.componentPath }}</code>
+      <div class="flex items-center text-xl font-sans font-semibold space-x-20">
+        <code class="px-3 py-0.5 border-rd-2 bg-gray-400 text-gray-50 dark:bg-gray-900 border border-gray-400 truncate max-w-150">{{
+          props.componentPath
+        }}</code>
+        <ul class="space-y-1 max-w-100 max-h-100 overflow-y-auto app-scrollbar">
+          <li class="truncate" v-for="item in props.modules">{{ item }}</li>
+          <li class="truncate" v-for="item in props.modules">{{ item }}</li>
+        </ul>
       </div>
-      <router-view></router-view>
+
+      <div>
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 const props = defineProps({
   componentPath: String,
+  modules: {
+    type: Array,
+    default: () => [],
+  },
 });
 </script>
 <style lang="scss"></style>

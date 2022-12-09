@@ -28,6 +28,7 @@ declare module '@vue/runtime-core' {
     AMenu: typeof import('@arco-design/web-vue')['Menu']
     AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
     ARow: typeof import('@arco-design/web-vue')['Row']
+    AScrollbar: typeof import('@arco-design/web-vue')['Scrollbar']
     ASpace: typeof import('@arco-design/web-vue')['Space']
     ASpin: typeof import('@arco-design/web-vue')['Spin']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
