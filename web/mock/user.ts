@@ -15,15 +15,13 @@ export default [
       };
     },
   },
-
   {
     url: "/api/v1/user/login",
     method: "post",
     response: ({ body }) => {
       delete body.password;
       delete body.captcha;
-      const token = mock.Random.word(20, 50);
-
+      const token = mock.Random.word(20, 50) + "-" + Date.now();
       return {
         stateCode: 200,
         message: "ok",

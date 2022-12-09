@@ -1,3 +1,5 @@
+import mock from "mockjs";
+
 const routers = [
   {
     pid: 0,
@@ -66,11 +68,17 @@ const routers = [
   },
 ];
 
+const validPperiod = 1000 * 60 * 60;
+
 export default [
   {
     url: "/api/v1/router/routers",
     method: "get",
-    response: () => {
+    response: (req: any) => {
+      const isOk = verifiToken(req.headers.authorization);
+      if (!isOk) {
+        req.headers["new-token"] = mock.Random.word(20, 50) + "-" + Date.now();
+      }
       return {
         stateCode: 200,
         message: "ok",
@@ -79,3 +87,9 @@ export default [
     },
   },
 ];
+
+function verifiToken(tokenstr: string) {
+  const token = tokenstr.split(" ")[1];
+  const time = token.split("-")[1];
+  return Number(time + validPperiod) > Date.now();
+}
