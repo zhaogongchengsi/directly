@@ -6,13 +6,7 @@ export default [
     method: "get",
     response: ({ query }) => {
       const id = mock.Random.word(4, 4);
-      const image = mock.Random.image(
-        `${query.width || 100}x${query.hright || 35}`,
-        "#894FC4",
-        "#FFF",
-        "png",
-        id
-      );
+      const image = mock.Random.image(`${query.width || 100}x${query.hright || 35}`, "#894FC4", "#FFF", "png", id);
       return {
         stateCode: 200,
         message: "ok",
@@ -29,19 +23,13 @@ export default [
       delete body.password;
       delete body.captcha;
       const token = mock.Random.word(20, 50);
-      const avatar = mock.Random.image(
-        "200x200",
-        mock.Random.rgb(),
-        mock.Random.rgb(),
-        "admin"
-      );
 
       return {
         stateCode: 200,
         message: "ok",
         data: {
           user: {
-            avatar,
+            avatar: "/avatar.png",
             account: body.account,
             nickName: "admin",
             language: "zn",

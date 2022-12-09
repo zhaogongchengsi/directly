@@ -1,21 +1,11 @@
 <template>
-  <div
-    class="w-full h-screen relative dark:bg-#232324 flex items-center justify-center login-page"
-  >
-    <div
-      class="flex text-black border-box p-10 dark:text-white rounded-md border-1 border-black dark:border-white hover:shadow-md"
-    >
+  <div class="w-full h-screen relative dark:bg-#232324 flex items-center justify-center login-page">
+    <div class="flex text-black border-box p-10 dark:text-white rounded-md border-1 border-black dark:border-white hover:shadow-md">
       <div class="flex items-center justify-center mr-20">
-        <img src="/bg1.png" alt="" />
+        <img src="/bg2.png" alt="" />
       </div>
       <div class="w-180">
-        <a-form
-          size="large"
-          :model="form"
-          :label-col-props="{ span: 3 }"
-          :wrapper-col-props="{ span: 21 }"
-          @submit="handleSubmit"
-        >
+        <a-form size="large" :model="form" :label-col-props="{ span: 3 }" :wrapper-col-props="{ span: 21 }" @submit="handleSubmit">
           <a-form-item field="account" label="账号">
             <a-input v-model="form.account" placeholder="请输入账号" />
           </a-form-item>
@@ -24,15 +14,8 @@
           </a-form-item>
           <a-form-item field="captcha" label="验证码">
             <div class="flex w-full">
-              <a-input
-                class="flex-1"
-                v-model="form.captcha"
-                placeholder="请输入验证码"
-              />
-              <div
-                class="w-30 flex items-center justify-center cursor-pointer cap-bg"
-                @click="captcha"
-              >
+              <a-input class="flex-1" v-model="form.captcha" placeholder="请输入验证码" />
+              <div class="w-30 flex items-center justify-center cursor-pointer cap-bg" @click="captcha">
                 <a-spin class="h-full" :loading="captchaImg.image === ''">
                   <img class="h-full" :src="captchaImg.image" alt="" />
                 </a-spin>
@@ -40,12 +23,7 @@
             </div>
           </a-form-item>
           <a-form-item>
-            <a-button
-              html-type="submit"
-              type="primary"
-              long
-              :loading="btnLading"
-            >
+            <a-button html-type="submit" type="primary" long :loading="btnLading">
               <div class="flex items-center">
                 <div class="icon i-tabler-login w-6 h-6"></div>
                 <span class="m-3">登录</span>
@@ -143,6 +121,9 @@ const handleSubmit = async (data: any) => {
   align-items: flex-start;
   box-sizing: border-box;
   padding: 10px;
+}
+
+.login-page {
 }
 
 .cap-bg {
