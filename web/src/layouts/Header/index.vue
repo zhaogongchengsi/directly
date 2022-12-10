@@ -1,19 +1,8 @@
 <template>
-  <a-layout-header
-    :style="{ height: setting.themeSetting.headerHeight + 'px' }"
-    :class="['shadow', `header-${setting.themeMode}-bg`, 'min-h-60px']"
-  >
+  <a-layout-header :style="{ height: setting.themeSetting.headerHeight + 'px' }" :class="['shadow', `header-${setting.themeMode}-bg`]">
     <div class="h-full flex justify-between items-center border-box pl-5 pr-10">
       <div class="cursor-pointer" @click="setsider">
-        <div
-          :class="[
-            setting.themeSetting.collapsed
-              ? 'i-tabler-arrows-right'
-              : 'i-tabler-arrows-left',
-            'icon',
-            'w-8 h-8',
-          ]"
-        />
+        <div :class="[setting.themeSetting.collapsed ? 'i-tabler-arrows-right' : 'i-tabler-arrows-left', 'icon', 'w-8 h-8']" />
       </div>
       <div class="right-header">
         <a-space size="large">

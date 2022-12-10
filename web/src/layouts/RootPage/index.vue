@@ -13,6 +13,7 @@
     </a-layout-sider>
     <a-layout>
       <Header />
+      <Tabs />
       <a-layout class="overflow-auto app-scrollbar" :style="{ height: `calc(100vh - ${theme.themeSetting.headerHeight || 60}px)` }">
         <a-layout-content class="scrollbar"> <custom-router-view /> </a-layout-content>
       </a-layout>
@@ -23,6 +24,8 @@
 import Header from "@/layouts/Header/index.vue";
 import Menus from "@/layouts/Menus/index.vue";
 import Logo from "@/layouts/Logo/index.vue";
+import Tabs from "@/layouts/Tabs/index.vue";
+
 import { useThemeStore } from "@/store";
 
 const theme = useThemeStore();
