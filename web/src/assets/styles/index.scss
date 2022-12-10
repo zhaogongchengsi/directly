@@ -17,6 +17,12 @@ body[arco-theme="dark"] {
   // 滚动轨道
   --scrollbar-track-color: transparent;
   --scrollbar-track-radius: 0;
+
+  --tabs-pane-background: var(--color-fill-2);
+  --tabs-pane-color: #fff;
+
+  --tabs-pane-background-active: rgb(161 161 161 / 41%);
+  --tabs-pane-color-active: #fff;
 }
 
 body {
@@ -33,6 +39,13 @@ body {
   --scrollbar-track-radius: 0;
 
   --scrollber-corner-color: transparent;
+
+  // tab 变量设置
+  --tabs-pane-background: var(--color-fill-2);
+  --tabs-pane-color: #333;
+
+  --tabs-pane-background-active: rgb(var(--arcoblue-1));
+  --tabs-pane-color-active: rgb(var(--arcoblue-6));
 }
 
 @mixin scrollbar {

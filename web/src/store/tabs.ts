@@ -9,7 +9,7 @@ const routerFormat = (router: Ref<RouteLocationNormalizedLoaded> | RouteLocation
 
 export type HistoryRecord = ReturnType<typeof routerFormat>;
 
-export const useTabsStore = defineStore("appStort", () => {
+export const useTabsStore = defineStore("tabsStort", () => {
   const router = useRouter();
   const routerHistory = ref<HistoryRecord[]>([routerFormat(router.currentRoute)]);
   const currentPointer = ref<number>(0);
