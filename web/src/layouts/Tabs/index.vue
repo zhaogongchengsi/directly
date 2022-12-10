@@ -1,29 +1,41 @@
 <template>
-  <div class="space-x-3 tabs-container">
+  <div class="tabs-container">
     <a-tag
       size="large"
-      v-for="(item, index) of appStore.routerHistory"
+      class="cursor-pointer"
+      closable
+      v-for="(item, index) of tabsStore.routerHistory"
       :key="item.name"
-      :color="appStore.currentPointer === index ? successColor : ''"
+      :color="tabsStore.currentPointer === index ? success : ''"
+      @close="tabsStore.deleteTab(item.name!, item.path)"
+      @click="clickTag(item)"
     >
       {{ item.title }}
     </a-tag>
   </div>
 </template>
 <script setup lang="ts">
-import { useAppStore } from "@/store";
+import { useTabsStore, HistoryRecord } from "@/store";
+import { useRouter } from "vue-router";
+const success = "#1D4ED8";
+const tabsStore = useTabsStore();
+const router = useRouter();
 
-const successColor = "#165DFF";
-
-const appStore = useAppStore();
+const clickTag = (item: HistoryRecord) => {
+  router.push(item.path);
+};
 </script>
 
 <style>
 .tabs-container {
+  padding: 8px 4px;
+  box-sizing: border-box;
+
+  width: 100%;
+  overflow-x: auto;
+
   display: flex;
   align-items: center;
-
-  padding: 3px 2px;
-  box-sizing: border-box;
+  gap: 10px;
 }
 </style>
