@@ -1,15 +1,29 @@
 <template>
-  <div class="p-2">
-    <a-space>
-      <a-tag v-for="item in appStore.routerHistory" closable>{{ item.title }}</a-tag>
-    </a-space>
+  <div class="space-x-3 tabs-container">
+    <a-tag
+      size="large"
+      v-for="(item, index) of appStore.routerHistory"
+      :key="item.name"
+      :color="appStore.currentPointer === index ? successColor : ''"
+    >
+      {{ item.title }}
+    </a-tag>
   </div>
 </template>
 <script setup lang="ts">
 import { useAppStore } from "@/store";
 
-const appStore = useAppStore();
+const successColor = "#165DFF";
 
-console.log(appStore.routerHistory);
+const appStore = useAppStore();
 </script>
-<style lang="scss"></style>
+
+<style>
+.tabs-container {
+  display: flex;
+  align-items: center;
+
+  padding: 3px 2px;
+  box-sizing: border-box;
+}
+</style>
