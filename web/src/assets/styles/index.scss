@@ -77,7 +77,8 @@ body {
   }
 }
 
-.app-scrollbar-herver {
+.app-scrollbar-hover {
+  scrollbar-gutter: stable;
   &::-webkit-scrollbar {
     display: block;
     width: 0;
@@ -92,6 +93,39 @@ body {
     }
   }
 
+  @include scrollbar;
+}
+.app-scrollbar-vertical-hover {
+  scrollbar-gutter: stable;
+  &::-webkit-scrollbar {
+    display: block;
+    width: 0;
+    height: 0;
+    transition: all 2s;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width) !important;
+    }
+  }
+  @include scrollbar;
+}
+
+.app-scrollbar-level-hover {
+  scrollbar-gutter: stable;
+  &::-webkit-scrollbar {
+    display: block;
+    width: 0;
+    height: 0;
+    transition: all 2s;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      height: var(--scrollbar-hright) !important;
+    }
+  }
   @include scrollbar;
 }
 
