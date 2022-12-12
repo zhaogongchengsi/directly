@@ -12,6 +12,7 @@ export type HistoryRecord = ReturnType<typeof routerFormat>;
 export const useTabsStore = defineStore("tabsStort", () => {
   const router = useRouter();
   const routerHistory = ref<HistoryRecord[]>([routerFormat(router.currentRoute)]);
+  const delelteHistory = ref<HistoryRecord[]>([]);
   const currentPointer = ref<number>(0);
   const currentRoute = computed(() => {
     return routerHistory.value[currentPointer.value];
@@ -58,6 +59,7 @@ export const useTabsStore = defineStore("tabsStort", () => {
    */
   const setCurrentPointer = (index: number) => {
     currentPointer.value = index;
+    router.push(currentRoute.value.path);
   };
 
   /**
@@ -71,16 +73,26 @@ export const useTabsStore = defineStore("tabsStort", () => {
     setCurrentPointer(findRecordIndex(_router.name, _router.path));
   };
 
+  // 删除逻辑待开发
   const deleteTab = (name: string, path: string) => {
     const newHistory = routerHistory.value.filter((item) => {
       return item.name !== name && item.path != path;
     });
-    routerHistory.value = newHistory;
-    if (newHistory.length < 1) {
-      return;
+
+    const deleteIndex = findRecordIndex(name, path);
+    const len = routerHistory.value.length;
+
+    // 当删除的tab为正在激活的tab时
+    if (name === currentRoute.value.name) {
+      // 如果tab列表中还剩一个删除的为最后一个时 什么都不做
+      if (deleteIndex === 0 || len === 1) {
+        routerHistory.value = newHistory;
+      } else {
+        setCurrentPointer(deleteIndex - 1);
+      }
     }
-    
-    setCurrentPointer(newHistory.length - 1);
+
+    routerHistory.value = newHistory;
   };
 
   watch(router.currentRoute, (newRouter) => {
