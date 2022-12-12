@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-screen relative dark:bg-#232324 flex items-center justify-center login-page">
-    <div class="flex text-black border-box p-10 dark:text-white rounded-md border-1 border-black dark:border-white hover:shadow-md">
+    <div class="z-10 h-200 flex items-center text-black border-box p-10 dark:text-white rounded-md login-container-box">
       <div class="flex items-center justify-center mr-20">
         <img src="/bg2.png" alt="" />
       </div>
@@ -34,7 +34,7 @@
         <a-row>
           <a-col :span="3"> </a-col>
           <a-col :span="21">
-            <a-divider orientation="center">其他方式</a-divider>
+            <a-divider orientation="center"></a-divider>
             <div class="flex justify-center mt-10">
               <div class="i-tabler-brand-wechat icon w-10 h-10"></div>
             </div>
@@ -109,7 +109,7 @@ const handleSubmit = async (data: any) => {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .login-mode-card {
   border-radius: 0% 100% 0% 100% / 1% 0% 100% 99%;
   width: 60px;
@@ -123,7 +123,78 @@ const handleSubmit = async (data: any) => {
   padding: 10px;
 }
 
+.login-container-box {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+body[arco-theme="dark"] .login-container-box {
+  background: rgba(6, 6, 6, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
 .login-page {
+  position: relative;
+  overflow: hidden;
+
+  --t: -15%;
+  --l: -15%;
+  --bg-color: #08aeea;
+  --time: 15s;
+
+  &::after,
+  &::before {
+    display: block;
+    content: "";
+    width: 900px;
+    height: 900px;
+    position: absolute;
+    z-index: 5;
+    top: var(--t);
+    left: var(--t);
+    // filter: contrast(15);
+    filter: blur(2px);
+  }
+
+  &::after {
+    border-radius: 60% 40% 67% 33% / 36% 71% 29% 64%;
+    box-shadow: 0px 0px 0 15px rgb(8 174 234 / 52%);
+    background: var(--bg-color);
+    animation: rotation var(--time) infinite linear;
+  }
+
+  &::before {
+    border-radius: 60% 40% 67% 33% / 36% 71% 29% 64%;
+    box-shadow: 0px 0px 0 15px rgba(41, 167, 212, 0.52);
+    background: var(--bg-color);
+    animation: counterclockwise var(--time) infinite linear;
+  }
+}
+
+@keyframes rotation {
+  to {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes counterclockwise {
+  to {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(-360deg);
+  }
 }
 
 .cap-bg {

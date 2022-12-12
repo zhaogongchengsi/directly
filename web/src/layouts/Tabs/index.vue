@@ -20,34 +20,6 @@
         <div class="i-tabler-x icon"></div>
       </div>
     </div>
-
-    <div
-      v-for="(item, index) of tabsStore.routerHistory"
-      :key="item.name"
-      :class="['tabs-pane', { 'tabs-pane-active': tabsStore.currentPointer === index }]"
-      @click="clickTag(item)"
-    >
-      <span class="tab-laber">
-        {{ item.title }}
-      </span>
-      <div class="tab-icon" @click.stop="tabsStore.deleteTab(item.name!, item.path)">
-        <div class="i-tabler-x icon"></div>
-      </div>
-    </div>
-
-    <div
-      v-for="(item, index) of tabsStore.routerHistory"
-      :key="item.name"
-      :class="['tabs-pane', { 'tabs-pane-active': tabsStore.currentPointer === index }]"
-      @click="clickTag(item)"
-    >
-      <span class="tab-laber">
-        {{ item.title }}
-      </span>
-      <div class="tab-icon" @click.stop="tabsStore.deleteTab(item.name!, item.path)">
-        <div class="i-tabler-x icon"></div>
-      </div>
-    </div>
   </div>
 </template>
 <script setup lang="ts">
