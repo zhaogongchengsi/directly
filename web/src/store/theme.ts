@@ -6,6 +6,8 @@ export const SIDER_STORAGE_SETTING_KEY = "anya-sider-setting";
 
 export type ThemeMode = "dark" | "light";
 
+const defaultSetting = { asiderWidth: 220, collapsed: false, headerHeight: 60 };
+
 export const useThemeStore = defineStore("theme", {
   state: () => {
     const mode = useColorMode({
@@ -25,11 +27,7 @@ export const useThemeStore = defineStore("theme", {
       },
     });
 
-    const themeSetting = useStorageAsync(SIDER_STORAGE_SETTING_KEY, {
-      asiderWidth: 220,
-      collapsed: false,
-      headerHeight: 60,
-    });
+    const themeSetting = useStorageAsync(SIDER_STORAGE_SETTING_KEY, defaultSetting);
 
     return { mode, themeSetting };
   },

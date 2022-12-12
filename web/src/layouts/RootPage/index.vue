@@ -14,7 +14,10 @@
     <a-layout>
       <Header />
       <Tabs />
-      <a-layout class="overflow-auto app-scrollbar" :style="{ height: `calc(100vh - ${theme.themeSetting.headerHeight || 60}px)` }">
+      <a-layout
+        class="overflow-auto app-scrollbar app-main-container"
+        :style="{ height: `calc(100vh - ${theme.themeSetting.headerHeight || 60}px)` }"
+      >
         <a-layout-content class="scrollbar"> <custom-router-view /> </a-layout-content>
       </a-layout>
     </a-layout>
@@ -35,5 +38,6 @@ const onCollapse = (val: boolean) => {
 </script>
 <style lang="scss">
 .app-main-container {
+  background-color: var(--app-main-container-bg-color);
 }
 </style>

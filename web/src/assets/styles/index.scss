@@ -23,6 +23,8 @@ body[arco-theme="dark"] {
 
   --tabs-pane-background-active: rgb(161 161 161 / 41%);
   --tabs-pane-color-active: #fff;
+
+  --app-main-container-bg-color: rgb(38 39 40);
 }
 
 body {
@@ -46,6 +48,9 @@ body {
 
   --tabs-pane-background-active: rgb(var(--arcoblue-1));
   --tabs-pane-color-active: rgb(var(--arcoblue-6));
+
+  // 内容区背景颜色
+  --app-main-container-bg-color: rgb(241 241 241);
 }
 
 @mixin scrollbar {
