@@ -75,10 +75,11 @@ export const useTabsStore = defineStore("tabsStort", () => {
     const newHistory = routerHistory.value.filter((item) => {
       return item.name !== name && item.path != path;
     });
-    if (newHistory.length < 1) {
-      return [];
-    }
     routerHistory.value = newHistory;
+    if (newHistory.length < 1) {
+      return;
+    }
+    
     setCurrentPointer(newHistory.length - 1);
   };
 

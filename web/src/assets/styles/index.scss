@@ -29,7 +29,7 @@ body[arco-theme="dark"] {
 
 body {
   --scrollbar-width: 5px;
-  --scrollbar-hright: 5px;
+  --scrollbar-height: 5px;
 
   // 滚动条
   --scrollbar-thumb-color: rgba(51, 50, 50, 0.5);
@@ -94,7 +94,7 @@ body {
   &:hover {
     &::-webkit-scrollbar {
       width: var(--scrollbar-width) !important;
-      height: var(--scrollbar-hright) !important;
+      height: var(--scrollbar-height) !important;
     }
   }
 
@@ -128,7 +128,7 @@ body {
 
   &:hover {
     &::-webkit-scrollbar {
-      height: var(--scrollbar-hright) !important;
+      height: var(--scrollbar-height) !important;
     }
   }
   @include scrollbar;
@@ -137,7 +137,7 @@ body {
 .app-scrollbar {
   &::-webkit-scrollbar {
     width: var(--scrollbar-width);
-    height: var(--scrollbar-hright);
+    height: var(--scrollbar-height);
   }
 
   @include scrollbar;

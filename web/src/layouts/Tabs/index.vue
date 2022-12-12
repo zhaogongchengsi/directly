@@ -3,8 +3,8 @@
     class="tabs-container tabs-container-border app-scrollbar-level-hover"
     :style="{
       '--tabs-pane-height': poros.height + 'px',
-      '--tabs-px': poros.paddingY + 'px',
-      height: `calc(${poros.height}px + ${poros.paddingY * 2}px + var(--scrollbar-hright))`,
+      '--tabs-p-top': paddingTop + 'px',
+      height: height,
     }"
   >
     <div
@@ -25,8 +25,16 @@
 <script setup lang="ts">
 import { useTabsStore, HistoryRecord } from "@/store";
 import { useRouter } from "vue-router";
+import { computed } from "vue";
+
 const tabsStore = useTabsStore();
 const router = useRouter();
+
+const tabsEmpty = computed(() => {
+  return !(tabsStore.routerHistory.length === 0);
+});
+
+const scrollbarHeight = parseInt(window.getComputedStyle(document.querySelector("body")!, null).getPropertyValue("--scrollbar-height"));
 
 const poros = defineProps({
   height: {
@@ -39,6 +47,36 @@ const poros = defineProps({
   },
 });
 
+const paddingTop = computed(() => {
+  if (!tabsEmpty.value) {
+    return 0;
+  }
+  return poros.paddingY;
+});
+
+const paddingBottom = computed(() => {
+  if (!tabsEmpty.value) {
+    return 0;
+  }
+  if (poros.paddingY > scrollbarHeight) {
+    return poros.paddingY - scrollbarHeight;
+  }
+  if (poros.paddingY < scrollbarHeight) {
+    return scrollbarHeight - poros.paddingY;
+  }
+  return poros.paddingY;
+});
+
+const height = computed(() => {
+  /**
+   * 此处需要计算高度 因为当标签过多 需要出现横向滚动条 会影响高度 出现页面抖动 避免这种情况 需要把滚动条设置为
+   * 不占有内容高度 但是会遮挡标签 所以让其等于外部容器的内边距高度 就不会遮挡内容
+   * see https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter
+   * height: .tabs-pane(内容的高度) + 容器顶部的内边距 + 容器底部的内边距 + y轴滚动条高度
+   */
+  return tabsEmpty.value ? `${poros.height + paddingTop.value + paddingBottom.value + scrollbarHeight}px` : 0;
+});
+
 const clickTag = (item: HistoryRecord) => {
   router.push(item.path);
 };
@@ -46,22 +84,13 @@ const clickTag = (item: HistoryRecord) => {
 
 <style lang="scss">
 .tabs-container {
-  --tabs-px: 8px;
-  --tabs-py: 5px;
+  --tabs-px: 10px;
 
-  /**
-   *
-   * 30px 也是.tabs-pane 的高度 最好是和上面的  --tabs-pane-height 数值保持一致
-   * 此处需要计算高度 因为当标签过多 需要出现横向滚动条 会影响高度 出现页面抖动 避免这种情况 需要把滚动条设置为
-   * 不占有内容高度 但是会遮挡标签 所以让其等于外部容器的内边距高度 就不会遮挡内容
-   * see https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter
-   * height: y轴滚动条高度 + .tabs-pane(内容的高度) + 滚动条的高度
-   */
+  transition: height 0.2s;
   box-sizing: border-box;
-
   padding-left: var(--tabs-px);
   padding-right: var(--tabs-px);
-  padding-top: var(--tabs-px);
+  padding-top: var(--tabs-p-top);
 
   width: 100%;
   overflow-x: auto;
@@ -84,6 +113,9 @@ const clickTag = (item: HistoryRecord) => {
     transition: all 0.1s cubic-bezier(0, 0, 1, 1);
     flex-shrink: 0;
 
+    user-select: none;
+    border-radius: 4px;
+
     &-active {
       background-color: var(--tabs-pane-background-active);
       color: var(--tabs-pane-color-active);
@@ -98,8 +130,8 @@ const clickTag = (item: HistoryRecord) => {
     }
 
     .tab-icon {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -111,7 +143,9 @@ const clickTag = (item: HistoryRecord) => {
       }
 
       &:hover {
-        border: 1px solid #ccc;
+        .icon {
+          color: #10b981;
+        }
       }
     }
   }

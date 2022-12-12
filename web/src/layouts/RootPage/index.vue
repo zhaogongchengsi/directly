@@ -12,8 +12,10 @@
       <Menus />
     </a-layout-sider>
     <a-layout>
-      <Header />
-      <Tabs />
+      <div class="app-header-container" :style="{ '--app-header-height': theme.themeSetting.headerHeight + 30 }">
+        <Header />
+        <Tabs />
+      </div>
       <a-layout
         class="overflow-auto app-scrollbar app-main-container"
         :style="{ height: `calc(100vh - ${theme.themeSetting.headerHeight || 60}px)` }"
@@ -39,5 +41,9 @@ const onCollapse = (val: boolean) => {
 <style lang="scss">
 .app-main-container {
   background-color: var(--app-main-container-bg-color);
+}
+
+.app-header-container {
+  height: var(--app-header-height);
 }
 </style>
