@@ -58,13 +58,8 @@ const paddingBottom = computed(() => {
   if (!tabsEmpty.value) {
     return 0;
   }
-  if (poros.paddingY > scrollbarHeight) {
-    return poros.paddingY - scrollbarHeight;
-  }
-  if (poros.paddingY < scrollbarHeight) {
-    return scrollbarHeight - poros.paddingY;
-  }
-  return poros.paddingY;
+  const height = Math.abs(poros.paddingY - scrollbarHeight);
+  return height ? height : poros.paddingY;
 });
 
 const height = computed(() => {
