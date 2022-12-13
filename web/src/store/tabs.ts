@@ -96,6 +96,8 @@ export const useTabsStore = defineStore("tabsStort", () => {
       setCurrentPointer(activeIndex - 1);
     }
     routerHistory.value = newHistory;
+
+    router.push(currentRoute.value.path);
   };
 
   watch(router.currentRoute, (newRouter) => {
