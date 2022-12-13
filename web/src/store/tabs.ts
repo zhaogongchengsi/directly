@@ -12,7 +12,6 @@ export type HistoryRecord = ReturnType<typeof routerFormat>;
 export const useTabsStore = defineStore("tabsStort", () => {
   const router = useRouter();
   const routerHistory = ref<HistoryRecord[]>([routerFormat(router.currentRoute)]);
-  const delelteHistory = ref<HistoryRecord[]>([]);
   const currentPointer = ref<number>(0);
   const currentRoute = computed(() => {
     return routerHistory.value[currentPointer.value];
@@ -59,7 +58,6 @@ export const useTabsStore = defineStore("tabsStort", () => {
    */
   const setCurrentPointer = (index: number) => {
     currentPointer.value = index;
-    router.push(currentRoute.value.path);
   };
 
   /**
@@ -75,23 +73,28 @@ export const useTabsStore = defineStore("tabsStort", () => {
 
   // 删除逻辑待开发
   const deleteTab = (name: string, path: string) => {
-    const newHistory = routerHistory.value.filter((item) => {
-      return item.name !== name && item.path != path;
-    });
-
-    const deleteIndex = findRecordIndex(name, path);
-    const len = routerHistory.value.length;
-
-    // 当删除的tab为正在激活的tab时
-    if (name === currentRoute.value.name) {
-      // 如果tab列表中还剩一个删除的为最后一个时 什么都不做
-      if (deleteIndex === 0 || len === 1) {
-        routerHistory.value = newHistory;
-      } else {
-        setCurrentPointer(deleteIndex - 1);
+    let deleteIndex: number;
+    let activeIndex: number = currentPointer.value;
+    const newHistory = routerHistory.value.filter((item, index) => {
+      if (item.name === currentRoute.value.name && item.path === currentRoute.value.path) {
+        activeIndex = index;
       }
+      if (item.name !== name && item.path != path) {
+        return true;
+      }
+      deleteIndex = index;
+      return false;
+    });
+    // const after = newHistory.length;
+    const direction = deleteIndex! - activeIndex;
+    if (direction >= 1) {
+      // console.log(`删除右边`);
+      setCurrentPointer(deleteIndex! - 1);
+    } else {
+      // console.log(`删除左边`);
+      // 删除的记录在激活记录的左边 指针右移
+      setCurrentPointer(activeIndex - 1);
     }
-
     routerHistory.value = newHistory;
   };
 
