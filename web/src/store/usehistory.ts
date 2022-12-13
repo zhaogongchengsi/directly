@@ -9,7 +9,7 @@ const routerFormat = (router: Ref<RouteLocationNormalizedLoaded> | RouteLocation
 
 export type HistoryRecord = ReturnType<typeof routerFormat>;
 
-export const useTabsStore = defineStore("tabsStort", () => {
+export const useHistory = defineStore("routerHistory", () => {
   const router = useRouter();
   const routerHistory = ref<HistoryRecord[]>([routerFormat(router.currentRoute)]);
   const currentPointer = ref<number>(0);
@@ -85,14 +85,15 @@ export const useTabsStore = defineStore("tabsStort", () => {
       deleteIndex = index;
       return false;
     });
-    // const after = newHistory.length;
-    const direction = deleteIndex! - activeIndex;
-    if (direction >= 1) {
+
+    /**
+     * 判断删除的 记录 在 激活记录的左边还是右边
+     */
+    if (deleteIndex! > activeIndex) {
       // console.log(`删除右边`);
       setCurrentPointer(deleteIndex! - 1);
     } else {
       // console.log(`删除左边`);
-      // 删除的记录在激活记录的左边 指针右移
       setCurrentPointer(activeIndex - 1);
     }
     routerHistory.value = newHistory;

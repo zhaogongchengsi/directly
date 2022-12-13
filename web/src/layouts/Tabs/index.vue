@@ -1,10 +1,12 @@
 <template>
   <div
-    class="tabs-container tabs-container-border app-scrollbar-level-hover"
+    class="tabs-container tabs-container-border"
+    ref="tabRef"
     :style="{
       '--tabs-pane-height': poros.height + 'px',
-      '--tabs-p-top': paddingTop + 'px',
-      height: height,
+      '--tabs-py': poros.paddingY + 'px',
+      '--tabs-px': poros.paddingX + 'px',
+      height: poros.scroll ? height : `auto`,
     }"
   >
     <div
@@ -23,12 +25,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useTabsStore, HistoryRecord } from "@/store";
+import { useHistory, HistoryRecord } from "@/store";
 import { useRouter } from "vue-router";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import { useMouseScroll } from "./useMouseScroll";
 
-const tabsStore = useTabsStore();
+const tabsStore = useHistory();
 const router = useRouter();
+
+const tabRef = ref();
+
+useMouseScroll(tabRef);
 
 const tabsEmpty = computed(() => {
   return !(tabsStore.routerHistory.length === 0);
@@ -44,6 +51,14 @@ const poros = defineProps({
   paddingY: {
     type: Number,
     default: 8,
+  },
+  paddingX: {
+    type: Number,
+    default: 8,
+  },
+  scroll: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -79,16 +94,17 @@ const clickTag = (item: HistoryRecord) => {
 
 <style lang="scss">
 .tabs-container {
-  --tabs-px: 10px;
-
-  transition: height 0.2s;
-  box-sizing: border-box;
-  padding-left: var(--tabs-px);
-  padding-right: var(--tabs-px);
-  padding-top: var(--tabs-p-top);
-
+  // --tabs-px: 10px;
+  // --tabs-py: 8px
   width: 100%;
   overflow-x: auto;
+
+  padding: var(--tabs-py) var(--tabs-px);
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   display: flex;
   gap: 10px;
