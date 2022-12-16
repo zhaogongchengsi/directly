@@ -12,7 +12,7 @@ export type ImportModule = () => Promise<unknown>;
 export type Modules = Record<string, ImportModule>;
 export type ModulesMap = Map<string, ImportModule>;
 
-function searchModuleComponent(router: RouterAsyncRow, modules: ModulesMap): ImportModule | undefined {
+export function searchModuleComponent(router: RouterAsyncRow, modules: ModulesMap): ImportModule | undefined {
   if (typeof router === "function") {
     return router;
   }
@@ -40,7 +40,7 @@ function searchModuleComponent(router: RouterAsyncRow, modules: ModulesMap): Imp
   return module;
 }
 
-function modulesOrganize(modules: Modules) {
+export function modulesOrganize(modules: Modules) {
   const modulesMap = new Map<string, ImportModule>();
   Object.entries(modules).forEach(([name, module]) => {
     modulesMap.set(name.replace(PATH_REG, ""), module);
@@ -48,7 +48,7 @@ function modulesOrganize(modules: Modules) {
   return modulesMap;
 }
 
-function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
+export function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
   const _router = routers.map((r) => {
     const component = searchModuleComponent(r, modules);
     componentReplace(r, component);
@@ -103,7 +103,6 @@ export async function useRouterAsync() {
     const routerRec = routerTravel(router, modulesOrganize(modules));
     return routerRec;
   } catch (err) {
-    console.error(err);
     throw err;
   }
 }

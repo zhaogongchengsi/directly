@@ -51,8 +51,10 @@
 import { getCaptcha } from "@/api/user";
 import Mode from "@/layouts/mode.vue";
 import { useUserStore } from "@/store";
-import { useRouter } from "vue-router";
+import { RouteRecordRaw, useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
+import { useRouterAsync } from "@/hooks/useRouter";
+import { createDefaultRouter } from "@/routers/base";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -102,10 +104,16 @@ const handleSubmit = async (data: any) => {
     },
   });
 
+  const asyncRouters = await useRouterAsync();
+  const baseRouter = createDefaultRouter(asyncRouters);
+
   btnLading.value = false;
 
   if (islogin) {
     router.push("/");
+    router.addRoute(baseRouter as RouteRecordRaw);
+
+    console.log(router.getRoutes());
   }
 };
 </script>
