@@ -103,7 +103,7 @@ export async function useRouterAsync() {
     const routerRec = routerTravel(router, modulesOrganize(modules));
     return routerRec;
   } catch (err) {
-    console.log(err);
-    return [];
+    console.error(err);
+    throw err;
   }
 }

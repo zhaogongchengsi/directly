@@ -16,7 +16,7 @@ export default defineConfig(() => {
 
   const proxyprefix = parsed["VITE_PROXY"];
   const proxytraget = parsed["VITE_TARGET"];
-  const usemock = parsed["VITE_USE_MOCK"];
+  const usemock = parsed["VITE_USE_MOCK"] === "true" ? true : false;
 
   return {
     plugins: [
@@ -32,18 +32,14 @@ export default defineConfig(() => {
         ],
       }),
       unocss({
-        presets: [
-          presetAttributify({ dark }),
-          presetUno({ dark }),
-          presetIcons({}),
-        ],
+        presets: [presetAttributify({ dark }), presetUno({ dark }), presetIcons({})],
       }),
-      viteMockServe({
-        mockPath: "mock", //mock文件路径，在根路径下创建一个mock文件
-        localEnabled: usemock ? true : false, //mock开关
-        prodEnabled: false, //生产环境下为false，这样就不会被打包到生产包中
-        ignore: /^\_/, //忽略开始_路径
-      }),
+      usemock &&
+        viteMockServe({
+          mockPath: "mock", //mock文件路径，在根路径下创建一个mock文件
+          prodEnabled: false, //生产环境下为false，这样就不会被打包到生产包中
+          ignore: /^\_/, //忽略开始_路径
+        }),
     ],
     resolve: {
       alias: {

@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 
+// token 的名称
 export const TOKEN_KEY = "anya-token";
+// 新token的名称
+export const NEW_TOKEN_KEY = "new-token";
 
 export interface HttpResponse<T extends any> {
   stateCode: number;
@@ -31,7 +34,7 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   function (response) {
     // token 续费
-    const newToken = response.headers["new-token"];
+    const newToken = response.headers[NEW_TOKEN_KEY];
     if (newToken) {
       window.localStorage.setItem(TOKEN_KEY, newToken);
     }
