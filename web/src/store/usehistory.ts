@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Ref, ref, watch, isRef, computed } from "vue";
+import { Ref, ref, watch, isRef, computed, unref } from "vue";
 import { RouteLocationNormalizedLoaded, useRouter } from "vue-router";
 
 const routerFormat = (router: Ref<RouteLocationNormalizedLoaded> | RouteLocationNormalizedLoaded) => {
@@ -14,7 +14,13 @@ export const useHistory = defineStore("routerHistory", () => {
   const routerHistory = ref<HistoryRecord[]>([routerFormat(router.currentRoute)]);
   const currentPointer = ref<number>(0);
   const currentRoute = computed(() => {
-    return routerHistory.value[currentPointer.value];
+    const his = routerHistory.value[currentPointer.value];
+
+    if (!his) {
+      return undefined;
+    }
+
+    return his;
   });
 
   /**
@@ -75,8 +81,14 @@ export const useHistory = defineStore("routerHistory", () => {
   const deleteTab = (name: string, path: string) => {
     let deleteIndex: number;
     let activeIndex: number = currentPointer.value;
+
+    const currentPath = unref(currentRoute);
+
     const newHistory = routerHistory.value.filter((item, index) => {
-      if (item.name === currentRoute.value.name && item.path === currentRoute.value.path) {
+      if (!currentPath) {
+        return true;
+      }
+      if (item.name === currentPath.name && item.path === currentPath.path) {
         activeIndex = index;
       }
       if (item.name !== name && item.path != path) {
@@ -96,9 +108,10 @@ export const useHistory = defineStore("routerHistory", () => {
       // console.log(`删除左边`);
       setCurrentPointer(activeIndex - 1);
     }
+
     routerHistory.value = newHistory;
 
-    router.push(currentRoute.value.path);
+    if (currentPath) router.push(currentPath.path);
   };
 
   watch(router.currentRoute, (newRouter) => {

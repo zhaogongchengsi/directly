@@ -4,8 +4,8 @@
     ref="tabRef"
     :style="{
       '--tabs-pane-height': poros.height + 'px',
-      '--tabs-py': poros.paddingY + 'px',
-      '--tabs-px': poros.paddingX + 'px',
+      '--tabs-py': tabsEmpty ? poros.paddingY + 'px' : '0px',
+      '--tabs-px': tabsEmpty ? poros.paddingX + 'px' : '0px',
       height: poros.scroll ? height : `auto`,
     }"
   >
