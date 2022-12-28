@@ -18,7 +18,7 @@ const click = async () => {
       {{ msg }}
     </h1>
 
-    <img src="vite.svg" class="w-50 my-10" alt="" />
+    <img src="/vite.svg" class="w-50 my-10" alt="" />
 
     <div class="flex flex-col justify-center items-center my-10">
       <button
