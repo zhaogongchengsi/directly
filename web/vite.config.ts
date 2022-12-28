@@ -1,7 +1,6 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
-import dotenv from "dotenv";
 import unocss from "unocss/vite";
 import { presetAttributify, presetUno, presetIcons } from "unocss";
 import autoImport from "unplugin-auto-import/vite";
@@ -10,13 +9,14 @@ import { ArcoResolver } from "unplugin-vue-components/resolvers";
 
 import { viteMockServe } from "vite-plugin-mock";
 
-export default defineConfig(() => {
-  const { parsed } = dotenv.config();
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+
   const dark = "class";
 
-  const proxyprefix = parsed["VITE_PROXY"];
-  const proxytraget = parsed["VITE_TARGET"];
-  const usemock = parsed["VITE_USE_MOCK"] === "true" ? true : false;
+  const proxyprefix = env.VITE_PROXY;
+  const proxytraget = env.VITE_TARGET;
+  const usemock = env.VITE_USE_MOCK === "true" ? true : false;
 
   return {
     plugins: [

@@ -27,7 +27,6 @@
     "@unocss/preset-icons": "^0.47.5",
     "@unocss/vite": "^0.46.5",
     "@vitejs/plugin-vue": "^3.2.0",
-    "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
     "mockjs": "^1.1.0",
     "sass": "^1.56.1",
