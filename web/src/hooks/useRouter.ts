@@ -49,6 +49,9 @@ export function modulesOrganize(modules: Modules) {
 }
 
 export function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
+
+  // todo: 格式化路由 的路径参数
+  
   const _router = routers.map((r) => {
     const component = searchModuleComponent(r, modules);
     componentReplace(r, component);
