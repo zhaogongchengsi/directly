@@ -50,7 +50,7 @@ const routers = [
       title: "工具库",
       auth: false,
       isMenu: true,
-      icon: "icon-exclamation-polygon-fill",
+      icon: "icon-calendar",
     },
   },
   {
@@ -63,7 +63,7 @@ const routers = [
       title: "文件切分",
       auth: false,
       isMenu: true,
-      icon: "icon-exclamation-polygon-fill",
+      icon: "icon-file",
     },
   },
 ];
