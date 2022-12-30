@@ -14,18 +14,22 @@ var (
 	Server = &config.Server{}
 )
 
-func InitGlobalValues()  {
-
+func initServer () {
 	err := config.ReadConfigs(ConfigDirPath + "/server.yaml", ConfigType, "Server", &Server)
-
 	if err != nil {
 		Server = &config.Server {
 			Port: 3000,
 			Host: "0.0.0.0",
+			Mode: "debug",
+			Prefix: "api/v1",
 		}
 		fmt.Printf("服务配置读取失败: %v, 使用默认配置", err)
 	}
+}
 
+
+func InitGlobalValues()  {
+	initServer()
 }
 
 
