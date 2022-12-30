@@ -169,3 +169,5 @@ test/
 
 server-nest/.env
 server-nest/prisma/migrations/*
+server-gin/static/*
+server-gin/configs/database.yaml

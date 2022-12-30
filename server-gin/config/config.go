@@ -5,10 +5,13 @@ type Server struct  {
 	Host string
 	Prefix string
 	Mode string
+	Static string
 }
 
-type  Config struct   {
-	Server
+type DataBase struct {
+	Username string
+	Password string
+	Port int
 }
 
 

@@ -4,3 +4,4 @@ Server:
   #  debug release test
   Mode: debug
   Prefix: api/v1
+  Static: static

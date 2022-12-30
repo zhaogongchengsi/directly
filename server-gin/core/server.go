@@ -20,15 +20,17 @@ func initServer(address string, router *gin.Engine) *http.Server {
 }
 
 func CreateAppServer()  {
-	gin.SetMode(global.Server.Mode)
-
 	// 初始化全局配置变量
 	global.InitGlobalValues()
 
+	gin.SetMode(global.Server.Mode)
 	// 初始化路由
 	router := routers.CreateAppRouter()
 
-	server := initServer(fmt.Sprintf(":%d", global.Server.Port),router)
+	// 设置静态文件目录
+	router.Static("/static", global.Server.Static)
+
+	server := initServer(fmt.Sprintf(":%d", global.Server.Port), router)
 
 	if err := server.ListenAndServe(); err != nil {
 		fmt.Printf("服务器启动失败 %v", err)
