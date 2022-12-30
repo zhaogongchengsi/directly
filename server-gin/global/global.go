@@ -12,6 +12,7 @@ const (
 
 var (
 	Server = &config.Server{}
+	DbConfig = &config.DataBase{}
 )
 
 func initServer () {
@@ -27,9 +28,17 @@ func initServer () {
 	}
 }
 
+func initDbConfig ()  {
+	err := config.ReadConfigs(ConfigDirPath + "/database.yaml", ConfigType, "DataBase", &DbConfig)
+	if err != nil {
+		fmt.Printf("数据库配置读取失败: %v", err)
+	}
+}
+
 
 func InitGlobalValues()  {
 	initServer()
+	initDbConfig()
 }
 
 

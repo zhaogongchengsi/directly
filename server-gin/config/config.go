@@ -12,6 +12,15 @@ type DataBase struct {
 	Username string
 	Password string
 	Port int
+	Url string
+	DbName string
+	Charset string
+
+	MaxIdleConns int
+	MaxOpenConns int
+
+	TablePrefix string
+	SingularTable bool
 }
 
 
