@@ -17,7 +17,9 @@ export async function createAppRouters(app: App) {
       NOT_FOUND_PAGE,
       createDefaultRouter(asyncRouters),
     ];
-  } catch (err) {}
+  } catch (err) {
+    console.error(err)
+  }
 
   const router = createRouter({
     history: createWebHistory(),

@@ -1,11 +1,32 @@
 <template>
-  <a-layout-header :style="{ height: setting.themeSetting.headerHeight + 'px' }" :class="['shadow', `header-${setting.themeMode}-bg`]">
+  <a-layout-header
+    :style="{ height: setting.themeSetting.headerHeight + 'px' }"
+    :class="['shadow', `header-${setting.themeMode}-bg`]"
+  >
     <div class="h-full flex justify-between items-center border-box pl-5 pr-10">
       <div class="cursor-pointer" @click="setsider">
-        <div :class="[setting.themeSetting.collapsed ? 'i-tabler-arrows-right' : 'i-tabler-arrows-left', 'icon', 'w-8 h-8']" />
+        <div
+          :class="[
+            setting.themeSetting.collapsed
+              ? 'i-tabler-arrows-right'
+              : 'i-tabler-arrows-left',
+            'icon',
+            'w-8 h-8',
+          ]"
+        />
       </div>
       <div class="right-header">
         <a-space size="large">
+          <a-dropdown @select="handleSelect">
+            <a-button type="text" shape="round">
+              {{ language?.label }}
+            </a-button>
+            <template #content>
+              <a-doption v-for="item of options" :value="item.value">{{
+                item.label
+              }}</a-doption>
+            </template>
+          </a-dropdown>
           <Mode />
           <a-dropdown trigger="hover">
             <div class="w-20 flex justify-center">
@@ -29,9 +50,16 @@ import { useRouter } from "vue-router";
 import Mode from "@/layouts/Mode.vue";
 import { computed } from "vue";
 import { UserInfo } from "@/types/user";
+import { useLocal } from "@/locale/useLocale";
+
 const setting = useThemeStore();
 const user = useUserStore();
 const router = useRouter();
+const { options, language, setLocal } = useLocal();
+
+const handleSelect = (v: any) => {
+  setLocal(v);
+};
 
 const userInfo = computed(() => {
   if (user.logined) {
