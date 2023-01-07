@@ -8,7 +8,7 @@ import "./style";
 import { createAppRouters } from "./routers";
 import { createAppStore } from "./store";
 import { createAppI18n } from "./locale";
-import CustomRouterView from "./components/CustomVIew/index.vue";
+import CustomRouterView from "./components/CustomView/index.vue";
 
 const app = createApp(App);
 
