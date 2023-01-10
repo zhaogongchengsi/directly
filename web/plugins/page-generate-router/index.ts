@@ -1,50 +1,75 @@
 import { isAbsolute, resolve } from "path";
-import { folderScan, readJson } from "./utils/index";
-import { normalizePath } from "vite";
+import { FileTree, folderScan, readJson, targetDirExist } from "./utils/index";
+// import { normalizePath } from "vite";
 
 export interface PageGenerateOptions {
   generateDir: string;
   root?: string;
   settingFile?: string;
   variableName?: string;
+  defaultIndex?: string;
   name?: string;
+}
+
+export interface GenerateRouterOptons {
+  targetDir: string;
+  settingFile: string;
+  defaultIndex: string;
 }
 
 export interface PageSetting {
   title?: string;
   index: string;
+  path: string;
+  name?: string;
+  component?: string;
   [key: string]: any;
 }
 
 const VIRTUAL_MODULEID = "page-router";
 const PLUGIN_NAME = "vite-plugin-page-generate-router";
 
-function formatRouterInfo(dir: string, files: string[], setting: PageSetting) {
-
-  console.log(files);
-
-  // console.log(normalizePath(dir), setting);
+async function formatRouterInfo(
+  dir: string,
+  files: string[],
+  setting: PageSetting,
+  options: GenerateRouterOptons
+) {
+  const { index } = setting;
+  const entry = resolve(dir, index || options.defaultIndex);
+  if (await targetDirExist(entry)) {
+    //todo: 转化为 路由参数
+    return Object.assign(setting, {});
+  }
   return setting;
 }
 
 async function generateRouter(
-  path: string,
-  settingName: string,
-  format: (dir: string, files: string[], setting: any) => any = formatRouterInfo
+  tree: FileTree,
+  options: GenerateRouterOptons,
+  format: (
+    dir: string,
+    files: string[],
+    setting: PageSetting,
+    opt: GenerateRouterOptons
+  ) => any = formatRouterInfo
 ) {
-  const modules = await folderScan(path);
-  
-  console.log(modules);
-  
   const routers: any[] = [];
-  for await (const [dir, files] of modules) {
-    const settingPath = resolve(dir, settingName);
-    const settingFile = files.find((file) => file === settingPath);
-    if (!settingFile) {
+
+  for await (const module of tree) {
+    const settingPath = resolve(module.path, options.settingFile);
+    const file = module.files.find((file) => file === settingPath);
+    if (!file) {
       continue;
     }
-    const setting = await readJson(settingFile);
-    routers.push(await Promise.resolve(format(dir, files, setting)));
+    const setting = await readJson<PageSetting>(file);
+    const router = await Promise.resolve(
+      format(module.path, module.files, setting, options)
+    );
+    if (module.children && module.children.length > 0) {
+      router.children = generateRouter(module.children, options, format);
+    }
+    routers.push(router);
   }
   return routers;
 }
@@ -68,7 +93,15 @@ export async function pageGenerateRouter(options?: PageGenerateOptions) {
         return;
       }
 
-      const res = await generateRouter(target, settingFile);
+      const modules = await folderScan(target);
+
+      const res = await generateRouter(modules, {
+        settingFile,
+        targetDir: target,
+        defaultIndex: options.defaultIndex || "index.vue",
+      });
+
+      console.log(res);
 
       return `export default ${JSON.stringify(res || [])}`;
     },

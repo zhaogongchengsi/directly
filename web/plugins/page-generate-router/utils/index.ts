@@ -10,7 +10,15 @@ export async function targetDirExist(path: string) {
   }
 }
 
-export async function scanFile(path: string, modules: Map<string, string[]>) {
+export type FileTree = FileNode[];
+
+export type FileNode = {
+  path: string;
+  children?: FileTree;
+  files: string[];
+};
+
+export async function scanFile(path: string) {
   const files = await readdir(path);
   const resultFile: string[] = [];
   for await (const file of files) {
@@ -19,49 +27,26 @@ export async function scanFile(path: string, modules: Map<string, string[]>) {
     if (fileStat.isFile()) {
       resultFile.push(newDir);
     }
-    if (fileStat.isDirectory()) {
-      const clidfiles = await scanFile(newDir, modules);
-      modules.set(newDir, clidfiles);
-    }
   }
   return resultFile;
 }
 
-export async function folderScan(
-  path: string,
-  cb?: (dir: string, files: string[]) => void
-) {
+export async function folderScan(path: string) {
   try {
     await access(path, constants.R_OK | constants.W_OK);
-    const results = new Map<string, string[]>();
     const files = await readdir(path);
-
+    const results: FileNode[] = [];
     for await (const file of files) {
-      const newDir = resolve(path, file);
-      const fileStat = await stat(newDir);
-      if (fileStat.isDirectory()) {
-        const res = results.get(newDir);
-        if (res) {
-          res.concat(await scanFile(newDir, results));
-        } else {
-          results.set(newDir, await scanFile(newDir, results));
-        }
-      } else {
-        const res = results.get(path);
-        if (res) {
-          res.push(newDir);
-        } else {
-          results.set(path, [newDir]);
-        }
+      const newPath = resolve(path, file);
+      const filestat = await stat(newPath);
+      if (filestat.isDirectory()) {
+        results.push({
+          path: newPath,
+          children: await folderScan(newPath),
+          files: await scanFile(newPath),
+        });
       }
     }
-
-    if (cb) {
-      results.forEach((files, dir) => {
-        cb(dir, files);
-      });
-    }
-
     return results;
   } catch (err) {
     throw err;
