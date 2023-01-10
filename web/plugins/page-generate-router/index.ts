@@ -1,6 +1,11 @@
-import { isAbsolute, resolve } from "path";
-import { FileTree, folderScan, readJson, targetDirExist } from "./utils/index";
-// import { normalizePath } from "vite";
+import { isAbsolute, resolve, parse } from "path";
+import {
+  FileTree,
+  folderScan,
+  readJson,
+  targetDirExist,
+  normalizePath,
+} from "./utils/index";
 
 export interface PageGenerateOptions {
   generateDir: string;
@@ -37,9 +42,28 @@ async function formatRouterInfo(
 ) {
   const { index } = setting;
   const entry = resolve(dir, index || options.defaultIndex);
+
   if (await targetDirExist(entry)) {
     //todo: 转化为 路由参数
-    return Object.assign(setting, {});
+
+    // user/admin/src/login/index.vue
+    // |    root     |    page      |
+    // |    root     |   component  |
+    //      root     |    path   |
+    //      root           |name |
+    // 根目录
+    const target = normalizePath(options.targetDir);
+    // 页面的根目录
+    const newdir = normalizePath(dir);
+    const path = newdir.replace(target, "");
+    const { name } = parse(entry);
+    const componentPath = normalizePath(entry).replace(target, "");
+    return {
+      component: componentPath,
+      path,
+      name,
+      meta: Object.assign(setting, setting.meta ?? {}),
+    };
   }
   return setting;
 }

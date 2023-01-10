@@ -1,5 +1,6 @@
 import { access, constants, readdir, stat, readFile } from "fs/promises";
-import { resolve } from "path";
+import { resolve, posix } from "path";
+import os from "os";
 
 export async function targetDirExist(path: string) {
   try {
@@ -56,4 +57,14 @@ export async function folderScan(path: string) {
 export async function readJson<T>(path: string): Promise<T> {
   const fileText = await readFile(path);
   return JSON.parse(fileText.toString() || "{}");
+}
+
+// export function slash(p: string): string {
+//   return p.replace(/\\/g, "/");
+// }
+
+const isWindows = os.platform() === "win32";
+export function normalizePath(path: string): string {
+  const reg = /\\/g;
+  return posix.normalize(isWindows ? path.replace(reg, "/") : path);
 }
