@@ -6,8 +6,10 @@ import { presetAttributify, presetUno, presetIcons } from "unocss";
 import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
-
 import { viteMockServe } from "vite-plugin-mock";
+
+import Inspect from "vite-plugin-inspect";
+import { pageGenerateRouter } from "./plugins/page-generate-router";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -32,7 +34,11 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       unocss({
-        presets: [presetAttributify({ dark }), presetUno({ dark }), presetIcons({})],
+        presets: [
+          presetAttributify({ dark }),
+          presetUno({ dark }),
+          presetIcons({}),
+        ],
       }),
       usemock &&
         viteMockServe({
@@ -40,6 +46,10 @@ export default defineConfig(({ mode }) => {
           prodEnabled: false, //生产环境下为false，这样就不会被打包到生产包中
           ignore: /^\_/, //忽略开始_路径
         }),
+      pageGenerateRouter({
+        generateDir: "./src/views",
+      }),
+      Inspect(),
     ],
     resolve: {
       alias: {
