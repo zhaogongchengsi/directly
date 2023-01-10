@@ -10,6 +10,11 @@ import { createAppStore } from "./store";
 import { createAppI18n } from "./locale";
 import CustomRouterView from "./components/CustomView/index.vue";
 
+// @ts-ignore
+import routers from "page-router";
+
+console.log(routers);
+
 const app = createApp(App);
 
 async function bootstrap() {

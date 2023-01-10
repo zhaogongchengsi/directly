@@ -21,14 +21,20 @@ export async function folderScan(
     const results = new Map<string, string[]>();
     const files = await readdir(path);
 
-    async function scanFile(path: string) {
+    async function scanFile(path: string, modules: Map<string, string[]>) {
       const files = await readdir(path);
       const resultFile: string[] = [];
       for await (const file of files) {
         const newDir = resolve(path, file);
+
         const fileStat = await stat(newDir);
         if (fileStat.isFile()) {
           resultFile.push(newDir);
+          continue;
+        }
+        if (fileStat.isDirectory()) {
+          const clidfiles = await scanFile(newDir, modules);
+          modules.set(newDir, clidfiles);
         }
       }
       return resultFile;
@@ -40,9 +46,9 @@ export async function folderScan(
       if (fileStat.isDirectory()) {
         const res = results.get(newDir);
         if (res) {
-          res.concat(await scanFile(newDir));
+          res.concat(await scanFile(newDir, results));
         } else {
-          results.set(newDir, await scanFile(newDir));
+          results.set(newDir, await scanFile(newDir, results));
         }
       } else {
         results.set(path, [newDir]);
