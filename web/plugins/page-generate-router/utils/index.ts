@@ -1,8 +1,6 @@
 import { access, constants, readdir, stat, readFile } from "fs/promises";
 import { resolve } from "path";
 
-export function isDir() {}
-
 export async function targetDirExist(path: string) {
   try {
     await access(path, constants.R_OK | constants.W_OK);
@@ -10,6 +8,23 @@ export async function targetDirExist(path: string) {
   } catch {
     return false;
   }
+}
+
+export async function scanFile(path: string, modules: Map<string, string[]>) {
+  const files = await readdir(path);
+  const resultFile: string[] = [];
+  for await (const file of files) {
+    const newDir = resolve(path, file);
+    const fileStat = await stat(newDir);
+    if (fileStat.isFile()) {
+      resultFile.push(newDir);
+    }
+    if (fileStat.isDirectory()) {
+      const clidfiles = await scanFile(newDir, modules);
+      modules.set(newDir, clidfiles);
+    }
+  }
+  return resultFile;
 }
 
 export async function folderScan(
@@ -20,25 +35,6 @@ export async function folderScan(
     await access(path, constants.R_OK | constants.W_OK);
     const results = new Map<string, string[]>();
     const files = await readdir(path);
-
-    async function scanFile(path: string, modules: Map<string, string[]>) {
-      const files = await readdir(path);
-      const resultFile: string[] = [];
-      for await (const file of files) {
-        const newDir = resolve(path, file);
-
-        const fileStat = await stat(newDir);
-        if (fileStat.isFile()) {
-          resultFile.push(newDir);
-          continue;
-        }
-        if (fileStat.isDirectory()) {
-          const clidfiles = await scanFile(newDir, modules);
-          modules.set(newDir, clidfiles);
-        }
-      }
-      return resultFile;
-    }
 
     for await (const file of files) {
       const newDir = resolve(path, file);
@@ -51,7 +47,12 @@ export async function folderScan(
           results.set(newDir, await scanFile(newDir, results));
         }
       } else {
-        results.set(path, [newDir]);
+        const res = results.get(path);
+        if (res) {
+          res.push(newDir);
+        } else {
+          results.set(path, [newDir]);
+        }
       }
     }
 
